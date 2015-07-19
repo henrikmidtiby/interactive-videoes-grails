@@ -1,7 +1,7 @@
 var ivids = {};
 
 (function(ivids) {
-    var player;
+    var player = null;
     var timeline;
     var youtubeVideoId;
     var questions = [];
@@ -9,6 +9,12 @@ var ivids = {};
     function bootstrap(playerSelector, videoId, tline) {
         timeline = tline;
         youtubeVideoId = videoId;
+
+        if (player !== null) {
+            Popcorn.destroy(player);
+            $(playerSelector).html("");
+            removeAllQuestions();
+        }
 
         if (tline !== undefined) {
             // The time line may be undefined, in this case the video should simply be displayed
@@ -113,6 +119,7 @@ var ivids = {};
 
     function buildNavigation() {
         var nav = $("#videoNavigation");
+        nav.html("<ul></ul>");
         for (var i = 0; i < timeline.length; i++) {
             var item = timeline[i];
             var nodeId = "navitem" + String(i);
@@ -195,6 +202,12 @@ var ivids = {};
                 }
                 return false;
             case "custom":
+                // Custom validators are hopefully just a temporary feature, that is never going to be needed.
+                // So much wrong with the following code snippet.
+                if (answer.validator === undefined) {
+                    var id = "temp_eval_func";
+                    answer.validator = eval("function " + id + "() {" + answer.jsValidator + "\n}" + id + "();");
+                }
                 return answer.validator(value);
         }
     }
@@ -213,7 +226,7 @@ var ivids = {};
     }
 
     function removeAllQuestions() {
-        $(".question").remove();
+        $("#wrapper").find(".question").remove();
         hideAllFields();
     }
 
