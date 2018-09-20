@@ -23,7 +23,7 @@
 This guide will assume a Linux system, but setup should be possible on both
 Windows and Mac.
 
-Installing the requirements on Linux can be done as shown below:
+Installing the requirements on Linux (Ubuntu 18.04) can be done as shown below:
 
 
 #### PostgreSQL
