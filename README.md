@@ -23,6 +23,23 @@
 This guide will assume a Linux system, but setup should be possible on both
 Windows and Mac.
 
+Installing the requirements on Linux can be done as shown below:
+
+
+#### PostgreSQL
+
+```
+sudo apt install postgresql
+```
+
+#### Grails
+
+```
+curl -s https://get.sdkman.io | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk install grails
+```
+
 ### Getting the Code
 
 Once the dependencies mentioned above are installed you should be able to
@@ -32,6 +49,7 @@ First clone and pull in sub-modules the project using:
 
 ```
 git clone https://github.com/DanThrane/tekvideo.sdu.dk.git
+cd tekvideo.sdu.dk
 git submodule init
 git submodule update
 ```
@@ -59,6 +77,11 @@ Create user and associated databases.
 CREATE USER devuser PASSWORD 'devpassword';
 CREATE DATABASE "tekvideo-dev" OWNER devuser;
 CREATE DATABASE "tekvideo-test" OWNER devuser;
+```
+
+Terminate the postgresql client
+```
+\q
 ```
 
 At this point the database schema needs to be created. This project uses the
