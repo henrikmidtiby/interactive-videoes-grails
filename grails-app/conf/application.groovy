@@ -21,7 +21,7 @@ environments {
 			driverClassName = "org.postgresql.Driver"
 			dialect = "org.hibernate.dialect.PostgreSQLDialect"
 			url = "jdbc:postgresql://localhost:5432/tekvideo-dev"
-			username = "devuser"
+			username = "tekvideo"
 			password = "devpassword"
 		}
 	}
@@ -32,7 +32,7 @@ environments {
 			driverClassName = "org.postgresql.Driver"
 			dialect = "org.hibernate.dialect.PostgreSQLDialect"
 			url = "jdbc:postgresql://localhost:5432/tekvideo-test"
-			username = "devuser"
+			username = "tekvideo"
 			password = "devpassword"
 		}
 	}
