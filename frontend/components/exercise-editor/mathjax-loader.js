@@ -10,7 +10,7 @@ var MathJax = {
         state = states.start,
         typesetting = false,
         queue = [],
-        src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js",
+        src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js",
         element_prototype = Object.create(HTMLElement.prototype);
 
     function process_queue() {
