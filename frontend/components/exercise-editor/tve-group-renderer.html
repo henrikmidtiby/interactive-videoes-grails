@@ -228,6 +228,13 @@ th, td {
         },
         displayNext: function() {
             this.stopCountdown();
+            // Hack for ensuring that exercises are shown in firefox. 
+            // For some (unknown) reason, the value of this.currentExercise
+            // is initialised to NaN, instead of 0.
+            if(isNaN(this.currentExercise))
+            {
+                this.currentExercise = 0;
+            }
             var next = (this.currentExercise + 1) % this.exercisePool.length;
             this.display(next);
         },
