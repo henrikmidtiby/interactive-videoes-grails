@@ -55,7 +55,7 @@ continue.
 First clone and pull in sub-modules the project using:
 
 ```
-git clone https://github.com/henrikmidtiby/tekvideo.sdu.dk.git
+git clone --recurse-submodules https://github.com/henrikmidtiby/tekvideo.sdu.dk.git
 cd tekvideo.sdu.dk
 git submodule init
 git submodule update
