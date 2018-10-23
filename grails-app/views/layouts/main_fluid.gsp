@@ -174,7 +174,7 @@
         <twbs:column cols="3">
             <ul class="list-unstyled">
                 <li>
-                    <a href="https://github.com/DanThrane/tekvideo.sdu.dk">
+                    <a href="https://github.com/henrikmidtiby/tekvideo.sdu.dk">
                         <fa:icon icon="${FaIcon.GITHUB}"/>
                         GitHub
                     </a>
