@@ -112,6 +112,25 @@ sudo -u postgres psql tekvideo-dev < 2018-09-21psqldump-tekvideo3
 ```
 
 
+### Ensure that the right java version is used
+
+There is a conflict with java version 10, so this has to be avoided.
+Here java 8 is installed and set as the default version to use.
+
+```
+sudo apt install openjdk-8-jdk
+sudo update-alternatives --config java
+```
+
+### Run the development server
+
+To run the development server, do the following:
+
+```
+cd tekvideo
+grails run-app
+```
+
 # TekVideo - grails 2 version of the readme
 
 ## Contents
