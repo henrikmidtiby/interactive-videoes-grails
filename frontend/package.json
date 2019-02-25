@@ -1,0 +1,20 @@
+{
+  "name": "tekvideo-frontend",
+  "version": "0.1.0",
+  "flat": true,
+  "description": "Frontend code for tekvideo.sdu.dk",
+  "main": "index.html",
+  "repository": "https://github.com/henrikmidtiby/tekvideo.sdu.dk",
+  "author": "Dan Sebastian Thrane and Henrik Skov Midtiby",
+  "license": "",
+  "dependencies": {
+    "@polymer/iron-icon": "^3.0.0-pre.12",
+    "@polymer/iron-icons": "^3.0.0-pre.12",
+    "@polymer/iron-flex-layout": "^3.0.1",
+    "@polymer/polymer": "^3.0.0-pre.12",
+    "@webcomponents/webcomponentsjs": "^1.0.20"
+  },
+  "resolutions": {
+    "@webcomponents/webcomponentsjs": "1.0.20"
+  }
+}
