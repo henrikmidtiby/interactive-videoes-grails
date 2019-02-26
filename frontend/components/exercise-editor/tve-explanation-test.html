@@ -1,0 +1,39 @@
+<html>
+<head>
+<meta charset="utf8">
+
+<script>
+    // setup Polymer options
+    window.Polymer = {lazyRegister: true, dom: 'shadow'};
+
+    // load webcomponents polyfills
+    (function() {
+      if ('registerElement' in document
+          && 'import' in document.createElement('link')
+          && 'content' in document.createElement('template')) {
+        // browser has web components
+      } else {
+        // polyfill web components
+        var e = document.createElement('script');
+        e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+        document.head.appendChild(e);
+      }
+    })();
+
+  </script>
+
+<link rel="import" href="./tve-explanation.html">
+</head>
+<body>
+
+<tve-explanation content="Bestem [[eql \frac{d}{dx} x^4]].">
+</tve-explanation>
+
+
+<tve-explanation content="Benyt formlen
+[[eq 
+\frac{d}{dx} x^n = n \cdot x^{n - 1}
+]]">
+</tve-explanation>
+
+</body>

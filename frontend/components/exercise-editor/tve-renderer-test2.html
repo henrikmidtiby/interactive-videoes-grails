@@ -1,0 +1,52 @@
+<html>
+<head>
+<meta charset="utf8">
+
+<script>
+    // setup Polymer options
+    window.Polymer = {lazyRegister: true, dom: 'shadow'};
+
+    // load webcomponents polyfills
+    (function() {
+      if ('registerElement' in document
+          && 'import' in document.createElement('link')
+          && 'content' in document.createElement('template')) {
+        // browser has web components
+      } else {
+        // polyfill web components
+        var e = document.createElement('script');
+        e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+        document.head.appendChild(e);
+      }
+    })();
+
+  </script>
+
+<link rel="import" href="./tve-renderer.html">
+</head>
+<body>
+<tve-renderer id="renderer"></tve-renderer>
+
+<!-- 
+There is an issue on where in the input field the answer is written. 
+What is written in the input field is currently shown outside the input field.
+-->
+
+<script>
+
+exercise = {
+  "name":"Simplificering 1-1",
+  "document":"\nReducer udtrykket [[eql \\frac{2a+b}{a}]]\n\n[[ref input1]]\n\n\n\n \n\n[[ref hint1]] \n\n[[ref hint2]] ",
+  "widgets":{
+    "input1":{"type":"equation-input","properties":{"content":"2 + \\frac{b}{a}"},"name":"input1"},
+    "hint1":{"type":"hint","properties":{"content":"Opdel  til to brøker.\n[[eq \n\\frac{2a+b}{a} = \\frac{2a}{a} + \\frac{b}{a}\n]]"},"name":"hint1"},
+    "hint2":{"type":"hint","properties":{"content":"Reducer udtryk \n[[eq \n\\frac{2a}{a} + \\frac{b}{a}  = 2 + \\frac{b}{a}\n]]"},"name":"hint2"}}};
+
+var renderer = document.getElementById("renderer");
+renderer.isInteractive = true;
+renderer.content = exercise.document;
+renderer.widgets = exercise.widgets;
+renderer.identifier = 123;
+
+</script>
+</body>
