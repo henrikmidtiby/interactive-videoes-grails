@@ -1,4 +1,4 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/marked-element/marked-element.js';
 import '@polymer/iron-icon/iron-icon.js';
@@ -6,8 +6,10 @@ import '@polymer/iron-icons/iron-icons.js';
 import './tekvideo-math-field.js';
 import './kas-import.js';
 import './tve-status-indicator.js';
-Polymer({
-  _template: Polymer.html`
+
+class TVInputExpression extends PolymerElement {
+  static get template() {
+    return html`
 <style include="iron-flex"></style>
 
 <style>
@@ -22,11 +24,11 @@ tekvideo-math-field {
 
 <tekvideo-math-field id="mathInput"></tekvideo-math-field> 
 <tve-status-indicator status="[[status]]"></tve-status-indicator>
-`,
+`;
+  }
 
-  is: 'tve-input-expression',
-
-  properties: {
+  static get properties() {
+    return {
       content: {
           type: String,
           value: ""
@@ -35,9 +37,10 @@ tekvideo-math-field {
           type: String,
           value: ""
       }
-  },
+    }
+  }
 
-  grade: function() {
+  grade() {
       var expectedValue = KAS.parse(this.content);
       var givenAnswer = KAS.parse(this.$.mathInput.value);
       var result = KAS.compare(expectedValue.expr, givenAnswer.expr);
@@ -45,9 +48,11 @@ tekvideo-math-field {
           correct: result.equal,
           answer: this.$.mathInput.value
       };
-  },
+  }
 
-  validate: function() {
+  validate() {
       return this.$.mathInput.value.length > 0;
   }
-});
+}
+  
+customElements.define('tve-input-expression', TVInputExpression);

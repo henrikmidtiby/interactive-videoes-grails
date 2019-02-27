@@ -1,4 +1,4 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import './jquery-dependency.js';
 import './tekvideo-math-field-scripts.js';
 function addExtSheet(componentRoot, href) {
@@ -18,8 +18,9 @@ function addExtSheet(componentRoot, href) {
     }
 }
 
-Polymer({
-  _template: Polymer.html`
+class TekvideoMathField extends PolymerElement {
+  static get template() {
+    return html`
 <style>
 :host {
     display: inline;
@@ -31,22 +32,26 @@ Polymer({
 </style>
 
 <span id="editor"></span>
-`,
+`;
+  }
 
-  is: 'tekvideo-math-field',
-  _shouldUpdate: true,
-
-  properties: {
+  static get properties() {
+    return {
       value: {
           type: String,
           value: "",
           observer: "_valueChanged"
       }
-  },
+    }
+  }
 
-  _mathField: null,
+  constructor() {
+    super();
+    this._shouldUpdate = true;
+    this._mathField = null;
+  }
 
-  attached: function() {
+  attached() {
       addExtSheet(this.shadowRoot, this.resolveUrl("/assets/vendor/mathquill2.css"));
       var self = this;
       var editor = this.$.editor;
@@ -62,12 +67,14 @@ Polymer({
           }
       });
       this._mathField = mathField;
-  },
+  }
 
-  _valueChanged: function() {
+  _valueChanged() {
       if (this._shouldUpdate && this._mathField != null) {
           this._mathField.latex(this.value);
       }
       this._shouldUpdate = true;
   }
-});
+}
+
+customElements.define('tekvideo-math-field', TekvideoMathField);
