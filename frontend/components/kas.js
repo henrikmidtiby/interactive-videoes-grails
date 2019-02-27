@@ -215,7 +215,7 @@ parse: function parse(input) {
         vstack.length = vstack.length - n;
         lstack.length = lstack.length - n;
     }
-    _token_stack:
+    //_token_stack:
         function lex() {
             var token;
             token = lexer.lex() || EOF;
@@ -1034,7 +1034,7 @@ parse: function parse(input) {
         vstack.length = vstack.length - n;
         lstack.length = lstack.length - n;
     }
-    _token_stack:
+    //_token_stack:
         function lex() {
             var token;
             token = lexer.lex() || EOF;
