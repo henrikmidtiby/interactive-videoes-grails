@@ -1,4 +1,4 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/paper-checkbox/paper-checkbox.js';
 import '@polymer/paper-radio-group/paper-radio-group.js';
@@ -7,8 +7,10 @@ import '@polymer/paper-listbox/paper-listbox.js';
 import '@polymer/paper-item/paper-item.js';
 import './tve-renderer.js';
 import './tve-status-indicator.js';
-Polymer({
-  _template: Polymer.html`
+
+class TVExerciseMultipleChoice extends PolymerElement {
+  static get template() {
+    return html`
 <style include="iron-flex"></style>
 
 <style>
@@ -46,11 +48,10 @@ paper-checkbox {
         </template>
     </paper-radio-group>
 </template>
-`,
-
-  is: 'tv-exercise-multiple-choice',
-
-  properties: {
+`;
+  }
+  static get properties() {
+    return {
       selectmultiple: {
           type: Boolean,
           value: false
@@ -67,17 +68,18 @@ paper-checkbox {
           type: String,
           value: ""
       }
-  },
+    }
+  }
 
-  _computeChoices: function(choices, randomizeOrder) {
+  _computeChoices(choices, randomizeOrder) {
       if (randomizeOrder) {
           return this._shuffle(this.choices);
       } else {
           return this.choices;
       }
-  },
+  }
 
-  _shuffle: function(originalArray) {
+  _shuffle(originalArray) {
       var array = originalArray.slice();
       var counter = array.length;
 
@@ -95,9 +97,9 @@ paper-checkbox {
           array[index] = temp;
       }
       return array;
-  },
+  }
 
-  getSelected: function() {
+  getSelected() {
       var selected = [];
 
       var items = this.selectmultiple ? 
@@ -111,9 +113,9 @@ paper-checkbox {
           }
       }
       return selected;
-  },
+  }
 
-  grade: function() {
+  grade() {
       var maxPoints = 0;
       var points = 0;
       var incorrect = 0;
@@ -142,9 +144,11 @@ paper-checkbox {
           },
           correct: points === maxPoints && incorrect === 0
       };
-  },
+  }
 
-  validate: function() {
+  validate() {
       return this.getSelected().length > 0
   }
-});
+}
+
+customElements.define('tv-exercise-multiple-choice', TVExerciseMultipleChoice);
