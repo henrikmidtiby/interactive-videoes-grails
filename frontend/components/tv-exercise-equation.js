@@ -1,8 +1,10 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import './math-tex.js';
-Polymer({
-  _template: Polymer.html`
+
+class TVExerciseEquation extends PolymerElement {
+  static get template() {
+   return html`
 <style include="iron-flex"></style>
 
 <style>
@@ -12,17 +14,23 @@ Polymer({
 </style>
 
 <math-tex display="block" content="\\begin{align*}{{content}}\\end{align*}"></math-tex>
-`,
-
-  is: 'tv-exercise-equation',
-
-  properties: {
-      content: {
-        	type: String,
-        	value: ""
-      }
+`;
   }
-});
+  static get properties() {
+    return {
+      content: {
+        type: String, 
+        value: ""
+      }
+    }
+  }
+  constructor() {
+    super();
+  }
+}
+
+customElements.define('tv-exercise-equation', TVExerciseEquation);
+
 /*<link rel="import" href="mathjax-include.html">*/
 /*
   FIXME(polymer-modulizer): the above comments were extracted
