@@ -1,12 +1,15 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/marked-element/marked-element.js';
 import '@polymer/iron-icon/iron-icon.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-styles/color.js';
 import '@polymer/paper-tooltip/paper-tooltip.js';
-Polymer({
-  _template: Polymer.html`
+
+
+class TVStatusIndicator extends PolymerElement {
+  static get template() {
+   return html`
 <style include="iron-flex"></style>
 
 <style>
@@ -40,26 +43,31 @@ Polymer({
     <iron-icon class="warning" id="warning" icon="warning"></iron-icon>
     <paper-tooltip for="warning">Dette felt mangler information</paper-tooltip>
 </span>
-`,
-
-  is: 'tve-status-indicator',
-
-  properties: {
+`;
+  }
+  static get properties() {
+    return {
       status: {
           type: String,
           value: ""
       }
-  },
+    }
+  }
+  constructor() {
+    super();
+  }
 
-  _showCorrect: function(status) {
+  _showCorrect(status) {
       return status === "correct";
-  },
+  }
 
-  _showIncorrect: function(status) {
+  _showIncorrect(status) {
       return status === "incorrect";
-  },
+  }
 
-  _showWarning: function(status) {
+  _showWarning(status) {
       return status === "warning";
   }
-});
+}
+
+customElements.define('tv-status-indicator', TVStatusIndicator);
