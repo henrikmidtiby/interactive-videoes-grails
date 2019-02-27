@@ -11,14 +11,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!doctype html>
 <html lang="en">
 <head>
-  <script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="components/math-tex.js"></script>
+  <script src="components/math-tex-controller.js"></script>
   <script type="module" src="components/tve-inline-equation.js"></script>
 </head>
 <body>
 
 Text 
-<tve-inline-equation content="a^2"></tve-inline-equation>
+<tve-inline-equation>2a+b</tve-inline-equation>
 more text... 
+
+<math-tex>s^t</math-tex>
+
+<math-tex>c = \sqrt{a^2 + b^2}</math-tex>
+
+<math-tex mode="display">\sum_{k=1}^n k = \frac{n (n + 1)}{2}</math-tex>
 
 
 </body>
