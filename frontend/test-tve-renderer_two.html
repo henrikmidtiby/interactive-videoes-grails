@@ -1,30 +1,11 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="utf8">
-
-<script>
-    // setup Polymer options
-    window.Polymer = {lazyRegister: true, dom: 'shadow'};
-
-    // load webcomponents polyfills
-    (function() {
-      if ('registerElement' in document
-          && 'import' in document.createElement('link')
-          && 'content' in document.createElement('template')) {
-        // browser has web components
-      } else {
-        // polyfill web components
-        var e = document.createElement('script');
-        e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
-        document.head.appendChild(e);
-      }
-    })();
-
-  </script>
-
-<link rel="import" href="./tve-renderer.html">
+  <meta charset="utf-8">
+  <link rel="import" href="components/tve-renderer.html">
 </head>
 <body>
+
 <tve-renderer id="renderer"></tve-renderer>
 
 <!-- 
@@ -33,7 +14,6 @@ What is written in the input field is currently shown outside the input field.
 -->
 
 <script>
-
 exercise = {
   "name":"Simplificering 1-1",
   "document":"\nReducer udtrykket [[eql \\frac{2a+b}{a}]]\n\n[[ref input1]]\n\n\n\n \n\n[[ref hint1]] \n\n[[ref hint2]] ",
@@ -47,6 +27,5 @@ renderer.isInteractive = true;
 renderer.content = exercise.document;
 renderer.widgets = exercise.widgets;
 renderer.identifier = 123;
-
 </script>
 </body>

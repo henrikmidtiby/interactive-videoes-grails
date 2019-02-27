@@ -2,6 +2,8 @@
   "entrypoint": "test-tve-status-indicator.html",
   "fragments": [
     "test-tve-inline-equation.html",
-    "test-tve-explanation.html"
+    "test-tve-explanation.html",
+    "test-tve-renderer_one.html",
+    "test-tve-renderer_two.html"
   ]
 }
