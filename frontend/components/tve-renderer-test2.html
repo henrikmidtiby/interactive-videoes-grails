@@ -22,7 +22,7 @@
 
   </script>
 
-<link rel="import" href="./tve-renderer.html">
+<script type="module" src="./tve-renderer.js"></script>
 </head>
 <body>
 <tve-renderer id="renderer"></tve-renderer>
@@ -32,7 +32,8 @@ There is an issue on where in the input field the answer is written.
 What is written in the input field is currently shown outside the input field.
 -->
 
-<script>
+<script type="module">
+import './tve-renderer.js';
 
 exercise = {
   "name":"Simplificering 1-1",
@@ -47,6 +48,5 @@ renderer.isInteractive = true;
 renderer.content = exercise.document;
 renderer.widgets = exercise.widgets;
 renderer.identifier = 123;
-
 </script>
 </body>

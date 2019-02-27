@@ -37,7 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   </script>
 
-  <link rel="import" href="components/tve-sorter.html">
+  <script type="module" src="./components/tve-sorter.js"></script>
 
   <style>
     body {
@@ -59,7 +59,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <tve-sorter id="renderer"></tve-sorter>
 
-<script>
+<script type="module">
+import './components/tve-sorter.js';
 var renderer = document.querySelector("#renderer");
 </script>
 

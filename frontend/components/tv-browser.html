@@ -1,13 +1,13 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<script type="module" src="../../@polymer/polymer/polymer-legacy.js"></script>
+<script type="module" src="../../@polymer/iron-ajax/iron-ajax.js"></script>
+<script type="module" src="../../@polymer/iron-flex-layout/iron-flex-layout-classes.js"></script>
+<script type="module" src="../../@polymer/paper-input/paper-input.js"></script>
+<script type="module" src="../../@polymer/paper-button/paper-button.js"></script>
+<script type="module" src="../../@polymer/paper-icon-button/paper-icon-button.js"></script>
+<script type="module" src="../../@polymer/iron-icon/iron-icon.js"></script>
+<script type="module" src="../../@polymer/iron-icons/iron-icons.js"></script>
 
-<link rel="import" href="tekvideo-exercise-card.html">
+<script type="module" src="./tekvideo-exercise-card.js"></script>
 
 <dom-module id="tv-browser">
 
@@ -101,7 +101,16 @@
 
 </template>
 
-<script>
+<script type="module">
+import '@polymer/polymer/polymer-legacy.js';
+import '@polymer/iron-ajax/iron-ajax.js';
+import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
+import '@polymer/paper-input/paper-input.js';
+import '@polymer/paper-button/paper-button.js';
+import '@polymer/paper-icon-button/paper-icon-button.js';
+import '@polymer/iron-icon/iron-icon.js';
+import '@polymer/iron-icons/iron-icons.js';
+import './tekvideo-exercise-card.js';
 function getAncestor(node, tagName) {
     tagName = tagName.toUpperCase();
     while (node) {
