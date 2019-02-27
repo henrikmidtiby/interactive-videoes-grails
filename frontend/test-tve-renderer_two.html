@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <link rel="import" href="components/tve-renderer.html">
+  <link rel="import" href="./bower_components/webcomponentsjs/webcomponents.js">
+  <link rel="import" href="./components/tve-renderer.html">
 </head>
 <body>
 
@@ -11,6 +12,16 @@
 <!-- 
 There is an issue on where in the input field the answer is written. 
 What is written in the input field is currently shown outside the input field.
+-->
+
+<!--
+Currently the input field it not shown and the following error is shown: 
+Uncaught TypeError: Cannot read property 'appendChild' of null
+    at addExtSheet (tekvideo-math-field.html:26)
+    at HTMLElement.attached (tekvideo-math-field.html:52)
+    at Array.<anonymous> (polymer-micro.html:333)
+    at Object._makeReady (polymer-micro.html:144)
+    at polymer-micro.html:151
 -->
 
 <script>

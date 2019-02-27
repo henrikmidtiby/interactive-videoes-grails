@@ -1,0 +1,3 @@
+2019-02-27 20.32: The tests are currently working in chromium, but will not load in firefox.
+2019-02-27 20.32: The following tests works without problems: test-tve-explanation.html test-tve-inline-equation.html test-tve-renderer_one.html test-tve-status-indicator.html
+2019-02-27 20.32: The test test-tve-renderer_two.html fails to render the input field.
