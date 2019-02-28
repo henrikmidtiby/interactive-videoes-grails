@@ -1,4 +1,4 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/marked-element/marked-element.js';
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
@@ -6,8 +6,10 @@ import '@polymer/paper-spinner/paper-spinner.js';
 import '@polymer/iron-pages/iron-pages.js';
 import './marked-import.js';
 import './tve-widget-config.js';
-Polymer({
-  _template: Polymer.html`
+
+class TVERenderer extends PolymerElement {
+  static get template() {
+    return html`
 <style is="custom-style">
 paper-button.custom {
     --paper-button-ink-color: white;
@@ -58,22 +60,23 @@ paper-button {
         <div>Der var en fejl i et af felterne</div>
     </iron-pages>
 </paper-button>
-`,
+`;
+  }
 
-  is: 'tve-renderer',
-  observers: ["_observeDocument(content, widgets)"],
-
-  properties: {
+  static get properties() {
+    return {
       identifier: {
           type: Number,
           value: null
       },
       content: {
           type: String,
+          observer: '_observeDocument'
       },
       widgets: {
           type: Object,
-          value: {}
+          value: {},
+          observer: '_observeDocument'
       },
       isInteractive: {
           type: Boolean,
@@ -83,9 +86,10 @@ paper-button {
           type: Number,
           value: 0
       }
-  },
+    }
+  }
 
-  _observeDocument: function(content) {
+  _observeDocument(content) {
       var documentInsertion = this.$.documentInsertion;
       var result = content;
 
@@ -145,9 +149,9 @@ paper-button {
           
           this._insertWidget(insertionPoint, output[i].type, output[i].body);
       }
-  },
+  }
 
-  _insertWidget: function(insertionPoint, type, body) {
+  _insertWidget(insertionPoint, type, body) {
       if (type === "ref") {
           var widgetInfo = this.widgets[body];
           if (!widgetInfo) return;
@@ -164,9 +168,9 @@ paper-button {
           var widget = this._createWidget(widgetConfig.component, { content: body });
           insertionPoint.parentNode.replaceChild(widget, insertionPoint);
       }
-  },
+  }
 
-  _createWidget: function(type, properties) {
+  _createWidget(type, properties) {
       var self = this;
       var component = document.createElement(type);
 
@@ -183,9 +187,9 @@ paper-button {
           });
       });
       return component;
-  },
+  }
 
-  checkAnswers: function() {
+  checkAnswers() {
       var GRADED_WIDGET_METHODS = ["grade", "validate"];
 
       var widgets = [].map.call(Polymer.dom(this.root).querySelectorAll("[data-is-widget]"), 
@@ -240,18 +244,18 @@ paper-button {
           passes: passes,
           widgetResults: widgetResults
       });
-  },
+  }
 
-  beginSpinning: function(status) {
+  beginSpinning(status) {
       var self = this;
       self._buttonStatus = 1;
 
       setTimeout(function() {
           self.setStatus(status);
       }, 600);
-  },
+  }
 
-  setStatus: function(status) {
+  setStatus(status) {
       var self = this;
       self._buttonStatus = status;
 
@@ -259,4 +263,6 @@ paper-button {
           self._buttonStatus = 0;
       }, 3000);
   }
-});
+}
+
+customElements.define('tve-renderer', TVERenderer);
