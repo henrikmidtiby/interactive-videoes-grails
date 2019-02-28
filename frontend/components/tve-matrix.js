@@ -1,10 +1,12 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/marked-element/marked-element.js';
 import './tve-matrix-renderer.js';
 import './tve-status-indicator.js';
-Polymer({
-  _template: Polymer.html`
+
+class TVEMatrix extends PolymerElement {
+  static get template() {
+    return html`
 <style include="iron-flex"></style>
 
 <style>
@@ -24,11 +26,10 @@ input {
 
 <tve-matrix-renderer id="matrix" height="[[height]]" width="[[width]]">
 </tve-matrix-renderer>
-`,
+`;}
 
-  is: 'tve-matrix',
-
-  properties: {
+  static get properties() {
+    return {
       height: {
           type: Number,
           value: 5
@@ -45,9 +46,10 @@ input {
           type: String,
           value: ""
       }
-  },
+    }
+  }
 
-  grade: function() {
+  grade() {
       var givenAnswer = this.$.matrix.value;
       var correct = true;
 
@@ -75,9 +77,12 @@ input {
           answer: givenAnswer,
           correct: correct
       };
-  },
+  }
 
-  validate: function() {
+  validate() {
       return true;
   }
-});
+}
+
+customElements.define('tve-matrix', TVEMatrix);
+
