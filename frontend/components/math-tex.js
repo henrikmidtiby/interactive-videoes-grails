@@ -1,153 +1,85 @@
-import '@polymer/polymer/polymer-legacy.js';
-import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
-import '@polymer/paper-input/paper-textarea.js';
-import '@polymer/paper-icon-button/paper-icon-button.js';
-var MathJax = {
-    skipStartupTypeset: true,
-    jax: ['input/TeX', 'output/HTML-CSS']
-};
+/*
+Typesets math written in (La)TeX, using [MathJax](http://mathjax.org).
 
-var states = {start: 1, loading: 2, ready: 3, error: 4},
-    state = states.start,
-    typesetting = false,
-    queue = [],
-    src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js",
-    element_prototype = Object.create(HTMLElement.prototype);
+##### Example
 
-function process_queue() {
-    var typesets = [], reprocesses = [];
-    queue.forEach(function (elem) {
-        var state = MathJax.Hub.isJax(elem);
-        if (state === -1)
-            typesets.push(elem);
-        else if (state === 1)
-            reprocesses.push(elem);
-    });
-    queue = [];
-    if (typesets.length) {
-        if (typesets.length === 1) typesets = typesets[0];
-        MathJax.Hub.Queue(['Typeset', MathJax.Hub, typesets]);
+    <math-tex>c = \sqrt{a^2 + b^2}</math-tex>
+
+##### Example
+
+    <math-tex mode="display">\sum_{k=1}^n k = \frac{n (n + 1)}{2}</math-tex>
+
+@element math-tex
+@version 0.3.2
+@homepage http://github.com/janmarthedal/math-tex/
+*/
+(function(global) {
+    'use strict';
+
+    const TAG_NAME = 'math-tex',
+        CONTROLLER_TAG_NAME = 'math-tex-controller',
+        mutation_config = {childList: true, characterData: true, attributes: true, subtree: true};
+    let handler;
+
+    function check_handler() {
+        if (handler) return;
+        handler = document.querySelector(CONTROLLER_TAG_NAME) || document.createElement(CONTROLLER_TAG_NAME);
+        if (!handler || typeof handler.typeset !== 'function') {
+            console.warn('no %s element defined; %s element will not work', CONTROLLER_TAG_NAME, TAG_NAME);
+            handler = undefined;
+        } else if (!document.contains(handler))
+            document.head.appendChild(handler);
     }
-    if (reprocesses.length) {
-        if (reprocesses.length === 1) reprocesses = reprocesses[0];
-        MathJax.Hub.Queue(['Reprocess', MathJax.Hub, reprocesses]);
+
+    function update(elem) {
+        const sdom = elem.shadowRoot,
+            math = elem.textContent.trim(),
+            isBlock = elem.getAttribute('mode') === 'display',
+            check = (isBlock ? 'D' : 'I') + math;
+        if (check !== elem._private.check) {
+            while (sdom.firstChild)
+                sdom.removeChild(sdom.firstChild);
+            elem._private.check = check;
+            if (math.length) {
+                handler.typeset(math, isBlock, function(melem, styleNode) {
+                    sdom.appendChild(styleNode.cloneNode(true));
+                    sdom.appendChild(melem);
+                });
+            }
+        }
     }
-    if (typesets.length || reprocesses.length)
-        MathJax.Hub.Queue(process_queue);
-    else
-        typesetting = false;
-}
 
-function check_queue() {
-    if (state === states.ready && !typesetting) {
-        typesetting = true;
-        process_queue();
+    class MathTex extends HTMLElement {
+
+        constructor() {
+            super();
+            this.attachShadow({mode: 'open'});
+            check_handler();
+        }
+
+        connectedCallback() {
+            const elem = this;
+            global.requestAnimationFrame(function() {
+                elem._private = {
+                    check: '',
+                    observer: new MutationObserver(function () {
+                        update(elem);
+                    })
+                };
+                update(elem);
+                elem._private.observer.observe(elem, mutation_config);
+            });
+        }
+
+        disconnectedCallback() {
+            if (this._private) {
+                this._private.observer.disconnect();
+                delete this._private;
+            }
+        }
+
     }
-}
 
-function load_library() {
-    state = states.loading;
-    MathJax.AuthorInit = function () {
-        MathJax.Hub.Register.StartupHook('End', function () {
-            state = states.ready;
-            check_queue();
-        });
-    };
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = src;
-    script.async = true;
-    script.onerror = function () {
-        console.warn("Error loading MathJax library " + src);
-        state = states.error;
-        queue = [];
-    };
-    document.head.appendChild(script);
-}
+    global.customElements.define(TAG_NAME, MathTex);
 
-element_prototype.attachedCallback = function () {
-    if (this.hasAttribute('src'))
-        src = this.getAttribute('src');
-    if (!this.hasAttribute('lazyload'))
-        load_library();
-};
-
-element_prototype.typeset = function (elem) {
-    if (state === states.error)
-        return;
-    queue.push(elem);
-    if (state === state.ready)  // lazy load
-        load_library();
-    else
-        check_queue();
-};
-
-document.registerElement('mathjax-loader', {
-    prototype: element_prototype
-});
-
-Polymer({
-  _template: Polymer.html`
-<style>
-:host {
-    display: inline;
-}
-</style>
-
-<span id="root"></span>
-`,
-
-  is: 'math-tex',
-
-  properties: {
-      content: {
-          type: String,
-          value: "2 + 2",
-          notify: true
-      },
-      display: {
-          type: String,
-          value: "inline"
-      }
-  },
-
-  observers: ["update(content, display)"],
-
-  _created: function() {
-      check_handler();
-      if (!handler) return;
-      var script = document.createElement('script');
-      this.$.root.appendChild(script);
-      this._private = {jax: script};
-      this.update();
-  },
-
-  attached: function() {
-      this._created();
-  },
-
-  update: function () {
-      if (this._private) {
-          var script = this._private.jax;
-          script.type = this.display === 'block' ? 'math/tex; mode=display' : 'math/tex';
-          script.innerHTML = this.content;
-          handler.typeset(script);
-      }
-  }
-});
-
-function check_handler() {
-    if (handler || (handler = document.querySelector(HANDLER_TAG_NAME))) return;
-    handler = document.createElement(HANDLER_TAG_NAME);
-    if (!handler || typeof handler.typeset !== 'function') {
-        console.warn(['no', HANDLER_TAG_NAME, 'element defined;', TAG_NAME, 'element will not work'].join(' '));
-        handler = undefined;
-    } else {
-        document.head.appendChild(handler);
-    }
-}
-
-var TAG_NAME = 'math-tex',
-    HANDLER_TAG_NAME = 'mathjax-loader',
-    mutation_config = {childList: true, characterData: true, attributes: true},
-    handler;
+})(window);
