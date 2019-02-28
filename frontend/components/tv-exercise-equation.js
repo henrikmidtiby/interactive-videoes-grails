@@ -1,6 +1,5 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
-import './math-tex.js';
 
 class TVExerciseEquation extends PolymerElement {
   static get template() {
