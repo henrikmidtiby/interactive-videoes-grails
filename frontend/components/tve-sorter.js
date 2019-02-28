@@ -1,4 +1,4 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import './tve-status-indicator.js';
 import './tve-renderer.js';
@@ -22,8 +22,9 @@ function zip(arrays) {
     });
 }
 
-Polymer({
-  _template: Polymer.html`
+class TVESorter extends PolymerElement {
+  static get template() {
+    return html`
 <style include="iron-flex"></style>
 
 <style>
@@ -66,11 +67,11 @@ Polymer({
     </template>
     </tbody>
 </table>
-`,
+`;
+  }
 
-  is: 'tve-sorter',
-
-  properties: {
+  static get properties() {
+    return {
       columnnamea: {
           type: String,
           value: "Col 1"
@@ -85,7 +86,8 @@ Polymer({
               [{ value: "1" }, { value: "A" }],
               [{ value: "2" }, { value: "B" }],
               [{ value: "3" }, { value: "C" }],
-          ]
+          ],
+          observer: '_observeValues'
       },
       _currentOrder: {
           type: Array,
@@ -95,15 +97,14 @@ Polymer({
           type: String,
           value: ""
       }
-  },
+    }
+  }
 
-  observers: ["_observeValues(values.*)"],
-
-  _observeValues: function() {
+  _observeValues() {
       this._computeRandomizedValues();
-  },
+  }
 
-  _computeRandomizedValues: function() {
+  _computeRandomizedValues() {
       if (!this.values) return;
       var aVals = this.values.map(function(e, i) { 
           return {  value: e[0].value, idx: i };  
@@ -114,18 +115,18 @@ Polymer({
       shuffle(aVals);
       shuffle(bVals);
       this._currentOrder = zip([aVals, bVals]);
-  },
+  }
 
-  dragA: function(e) {
+  dragA(e) {
       var dom = Polymer.dom(this.root);
       var items = dom.querySelectorAll(".itemA");
       for (var i = 0; i < items.length; i++) {
           if (i === e.model.index) continue;
           items[i].classList.add("dropzone");
       }
-  },
+  }
 
-  dropA: function(e) {
+  dropA(e) {
       var targetIdx = e.model.index;
       var sourceIdx = parseInt(e.dataTransfer.getData("x-tve-dnd-a"));
 
@@ -133,28 +134,28 @@ Polymer({
       this._currentOrder[targetIdx][0] = this._currentOrder[sourceIdx][0];
       this._currentOrder[sourceIdx][0] = temp;
       this._currentOrder = JSON.parse(JSON.stringify(this._currentOrder));
-  },
+  }
 
-  dragOverA: function(e){
+  dragOverA(e){
       var types = e.dataTransfer.types;
       if (types.indexOf("x-tve-dnd-a") !== -1) {
           e.preventDefault();
       }
-  },
+  }
 
-  dragStartA: function(e) {
+  dragStartA(e) {
       e.dataTransfer.setData("x-tve-dnd-a", e.model.index);
-  },
+  }
 
-  dragEndA: function(e) {
+  dragEndA(e) {
       var dom = Polymer.dom(this.root);
       var items = dom.querySelectorAll(".itemA");
       for (var i = 0; i < items.length; i++) {
           items[i].classList.remove("dropzone");
       }
-  },
+  }
 
-  grade: function() {
+  grade() {
       var correct = true;
       for (var i = 0; i < this._currentOrder.length; i++) {
           var item = this._currentOrder[i];
@@ -164,9 +165,11 @@ Polymer({
           }
       }
       return { correct: correct, answer: "" };
-  },
+  }
 
-  validate: function() {
+  validate() {
       return true;
   }
-});
+}
+
+customElements.define('tve-sorter', TVESorter);
