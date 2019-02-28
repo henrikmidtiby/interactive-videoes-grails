@@ -91,7 +91,7 @@ paper-button {
 
   _observeDocument(content) {
       var documentInsertion = this.$.documentInsertion;
-      var result = content;
+      var result = this.content;
 
       var SEARCHING = 0,
           HAS_OPEN_BRACKET = 1,
