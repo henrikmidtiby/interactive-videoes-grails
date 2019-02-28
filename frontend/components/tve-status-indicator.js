@@ -70,4 +70,4 @@ class TVStatusIndicator extends PolymerElement {
   }
 }
 
-customElements.define('tv-status-indicator', TVStatusIndicator);
+customElements.define('tve-status-indicator', TVStatusIndicator);
