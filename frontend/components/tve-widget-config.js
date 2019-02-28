@@ -72,3 +72,5 @@ registerWidgetType(
     "tve-sorter-editor",
     ["columnnamea", "columnnameb", "values"]
 );
+
+export default TekVideo;

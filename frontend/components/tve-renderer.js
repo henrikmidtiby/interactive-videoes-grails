@@ -5,7 +5,7 @@ import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/paper-spinner/paper-spinner.js';
 import '@polymer/iron-pages/iron-pages.js';
 import './marked-import.js';
-import './tve-widget-config.js';
+import TekVideo from './tve-widget-config.js' 
 
 class TVERenderer extends PolymerElement {
   static get template() {
