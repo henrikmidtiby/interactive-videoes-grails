@@ -38,7 +38,8 @@ class TVEExplanation extends PolymerElement {
       this.$.collapse.show();
       this.$.button.hidden = true;
 
-      this.fire("action", { type: "hint-showed" })
+      var event = new CustomEvent('action', {type: "hint-showed", bubbles: true, composed: true});
+      this.dispatchEvent(event);
   }
 }
 
