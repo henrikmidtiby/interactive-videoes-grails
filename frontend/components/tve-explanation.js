@@ -1,11 +1,13 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/marked-element/marked-element.js';
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/iron-collapse/iron-collapse.js';
 import './tve-renderer.js';
-Polymer({
-  _template: Polymer.html`
+
+class TVEExplanation extends PolymerElement {
+  static get template() {
+    return html`
 <style include="iron-flex"></style>
 
 <style>
@@ -20,21 +22,24 @@ Polymer({
     <h3>Hint</h3>
     <tve-renderer content="{{content}}"></tve-renderer>
 </iron-collapse>
-`,
+`;
+  }
 
-  is: 'tve-explanation',
-
-  properties: {
+  static get properties() {
+    return {
       content: {
           type: String,
           value: ""
       }
-  },
+    }
+  }
 
-  showExplanation: function() {
+  showExplanation() {
       this.$.collapse.show();
       this.$.button.hidden = true;
 
       this.fire("action", { type: "hint-showed" })
   }
-});
+}
+
+customElements.define('tve-explanation', TVEExplanation);
