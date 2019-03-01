@@ -2,15 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <script src="components/math-tex.js"></script>
-  <script src="components/math-tex-controller.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.css" integrity="sha384-b/NoaeRXkMxyKcrDw2KtVtYKkVg3dA0rTRgLoV7W2df3MzeR1eHLTi+l4//4fMwk" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.js" integrity="sha384-ern5NCRqs6nJ/a4Ik0nB9hnKVH5HwV2XRUYdQl09OB/vvd1Lmmqbg1Mh+mYUclXx" crossorigin="anonymous"></script>
   <script type="module" src="components/tve-inline-equation.js"></script>
 </head>
 <body>
 
 Text 
-<tve-inline-equation>2a+b</tve-inline-equation>
+<tve-inline-equation content="2a+b"></tve-inline-equation>
 more text... 
+
+<br>
+Pythagean theorem:
+<tve-inline-equation content="c = a^2 + 2 \cdot b"></tve-inline-equation>
 
 <br>
 Pythagean theorem:
@@ -19,7 +23,19 @@ Pythagean theorem:
 
 <br>
 Plain math-tex element:
-<math-tex>c = \sqrt{a^2 + b^2}</math-tex>
+<span id="math"></span>
+
+<p onclick="render()">Hejsa</p>
+
+<script>
+render = function() {
+console.log('test');
+element = document.getElementById('math');
+katex.render("c = \\pm\\sqrt{a^2 + b^2}", element, {
+    throwOnError: false
+});
+}
+</script>
 
 
 </body>
