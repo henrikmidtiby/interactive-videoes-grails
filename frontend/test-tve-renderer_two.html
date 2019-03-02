@@ -3,11 +3,12 @@
 <head>
   <meta charset="utf-8">
   <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.js" integrity="sha384-ern5NCRqs6nJ/a4Ik0nB9hnKVH5HwV2XRUYdQl09OB/vvd1Lmmqbg1Mh+mYUclXx" crossorigin="anonymous"></script>
   <script type="module" src="./components/tve-renderer.js"></script>
 </head>
 <body>
 
-<tve-renderer id="renderer"></tve-renderer>
+<tve-renderer id="renderer" content=""></tve-renderer>
 
 <!-- 
 There is an issue on where in the input field the answer is written. 
@@ -26,8 +27,7 @@ Uncaught TypeError: Cannot read property 'appendChild' of null
 
 <script type="module">
 //import '@webcomponents/webcomponentsjs/webcomponents.js';
-import './components/tve-renderer.js';
-exercise = {
+var exercise = {
   "name":"Simplificering 1-1",
   "document":"\nReducer udtrykket [[eql \\frac{2a+b}{a}]]\n\n[[ref input1]]\n\n\n\n \n\n[[ref hint1]] \n\n[[ref hint2]] ",
   "widgets":{
