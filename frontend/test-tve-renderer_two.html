@@ -3,30 +3,14 @@
 <head>
   <meta charset="utf-8">
   <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.js" integrity="sha384-ern5NCRqs6nJ/a4Ik0nB9hnKVH5HwV2XRUYdQl09OB/vvd1Lmmqbg1Mh+mYUclXx" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.js" integrity="sha384-ern5NCRqs6nJ/a4Ik0nB9hnKVH5HwV2XRUYdQl09OB/vvd1Lmmqbg1Mh+mYUclXx" crossorigin="anonymous"></script>
   <script type="module" src="./components/tve-renderer.js"></script>
 </head>
 <body>
 
 <tve-renderer id="renderer" content=""></tve-renderer>
 
-<!-- 
-There is an issue on where in the input field the answer is written. 
-What is written in the input field is currently shown outside the input field.
--->
-
-<!--
-Currently the input field it not shown and the following error is shown: 
-Uncaught TypeError: Cannot read property 'appendChild' of null
-    at addExtSheet (tekvideo-math-field.html:26)
-    at HTMLElement.attached (tekvideo-math-field.html:52)
-    at Array.<anonymous> (polymer-micro.html:333)
-    at Object._makeReady (polymer-micro.html:144)
-    at polymer-micro.html:151
--->
-
 <script type="module">
-//import '@webcomponents/webcomponentsjs/webcomponents.js';
 var exercise = {
   "name":"Simplificering 1-1",
   "document":"\nReducer udtrykket [[eql \\frac{2a+b}{a}]]\n\n[[ref input1]]\n\n\n\n \n\n[[ref hint1]] \n\n[[ref hint2]] ",
