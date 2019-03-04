@@ -1,4 +1,4 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/marked-element/marked-element.js';
 import '@polymer/paper-button/paper-button.js';
@@ -8,9 +8,9 @@ import '@polymer/paper-card/paper-card.js';
 import './tve-renderer.js';
 import './tve-templates.js';
 
-
-Polymer({
-  _template: Polymer.html`
+class TVETemplateSelector extends PolymerElement {
+  static get template() {
+    return html`
 <style include="iron-flex"></style>
 
 <style>
@@ -74,11 +74,11 @@ paper-icon-button.template-icon {
     </template>
   </div>
 </iron-collapse>
-`,
+`;
+  }
 
-  is: 'tve-template-selector',
-
-  properties: {
+  static get properties() {
+    return {
       _dirtyTemplates: {
           type: Boolean,
           value: true
@@ -87,35 +87,38 @@ paper-icon-button.template-icon {
           type: Array,
           computed: "_computeTemplates(_dirtyTemplates)"
       }
-  },
+    }
+  }
 
-  insertTemplate: function(name) {
+  insertTemplate(name) {
       var template = TekVideo.Templates[name];
       if (template) {
           this.fire("insert", template);
       }
-  },
+  }
 
-  _insertTemplate: function(e) {
+  _insertTemplate(e) {
       var name = e.target.dataset.template;
       // TODO Confirm
       this.insertTemplate(name);
-  },
+  }
 
-  _computeTemplates: function() {
+  _computeTemplates() {
       var templates = TekVideo.Templates;
       var res = [];
       for (var key in templates) {
           res.push(templates[key]);
       }
       return res;
-  },
+  }
 
-  refreshTemplates: function() {
+  refreshTemplates() {
       this._dirtyTemplates = !this._dirtyTemplates;
-  },
+  }
 
-  toggle: function() {
+  toggle() {
       this.$.collapse.toggle();
   }
-});
+}
+
+customElements.define('tve-template-selector', TVETemplateSelector);

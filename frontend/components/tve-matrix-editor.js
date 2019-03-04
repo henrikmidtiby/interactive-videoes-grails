@@ -1,9 +1,11 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/paper-input/paper-input.js';
 import './tve-matrix-renderer.js';
-Polymer({
-  _template: Polymer.html`
+
+class TVEMatrixEditor extends PolymerElement {
+  static get template() {
+    return html`
 <style include="iron-flex"></style>
 
 <style>
@@ -26,11 +28,11 @@ paper-input{
     <tve-matrix-renderer id="matrix" width="[[width]]" height="[[height]]" value="{{answer}}">
     </tve-matrix-renderer>
 </div>
-`,
+`;
+  }
 
-  is: 'tve-matrix-editor',
-
-  properties: {
+  static get properties() {
+    return {
       height: {
           type: Number,
           value: 5,
@@ -45,5 +47,8 @@ paper-input{
           type: Array,
           notify: true
       }
+    }
   }
-});
+}
+
+customElements.define('tve-matrix-editor', TVEMatrixEditor);

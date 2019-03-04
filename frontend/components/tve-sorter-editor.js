@@ -1,4 +1,4 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
@@ -6,8 +6,10 @@ import '@polymer/paper-checkbox/paper-checkbox.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
 import '@polymer/paper-tooltip/paper-tooltip.js';
-Polymer({
-  _template: Polymer.html`
+
+class TVESorterEditor extends PolymerElement {
+  static get template() {
+    return html`
 <style include="iron-flex"></style>
 
 <style>
@@ -30,11 +32,11 @@ Polymer({
 <div class="layout horizontal">
     <paper-button on-click="_addItem" class="flex">Nyt element</paper-button>
 </div>
-`,
+`;
+  }
 
-  is: 'tve-sorter-editor',
-
-  properties: {
+  static get properties() {
+    return {
       columnnamea: {
           type: String,
           value: "",
@@ -50,17 +52,21 @@ Polymer({
           value: [],
           notify: true
       },
-  },
+    };
+  }
 
-  _addItem: function() {
+  _addItem() {
       var copy = this.values.slice();
       copy.push([{ value: "" }, { value: "" }]);
       this.values = copy;
-  },
+  }
 
-  delete: function(e) {
+  delete(e) {
       var index = e.model.index;
       this.values.splice(index, 1);
       this.values = this.values.slice();
   }
-});
+}
+
+customElements.define('tve-sorter-editor', TVESorterEditor);
+

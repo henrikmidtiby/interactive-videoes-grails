@@ -1,4 +1,4 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/iron-image/iron-image.js';
 import '@polymer/iron-icon/iron-icon.js';
@@ -10,8 +10,10 @@ import '@polymer/paper-styles/color.js';
 import '@polymer/paper-styles/typography.js';
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
-Polymer({
-  _template: Polymer.html`
+
+class TekvideoExerciseCard extends PolymerElement {
+  static get template() {
+    return html`
 <style include="iron-flex"></style>
 <style is="custom-style">
 :host {
@@ -101,11 +103,11 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
       </div>
     </div>
   </paper-card>
-`,
+`;
+  }
 
-  is: 'tekvideo-exercise-card',
-
-  properties: {
+  static get properties() {
+    return {
       title: {
           type: String
       },
@@ -140,13 +142,14 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
           type: String,
           value: "#"
       }
-  },
+    };
+  }
 
-  _hasThumbnail: function(thumbnail) {
+  _hasThumbnail(thumbnail) {
       return thumbnail != null;
   },
 
-  _computeShortDescription: function(description, maxDescriptionLength) {
+  _computeShortDescription(description, maxDescriptionLength) {
       if (description.length > maxDescriptionLength) {
           return description.substring(0, maxDescriptionLength) + "...";
       } else {
@@ -154,15 +157,17 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
       }
   },
 
-  _isLastBreadcrumb: function(index) {
+  _isLastBreadcrumb(index) {
       return index == this.breadcrumbs.length -1;
   },
 
-  _hideFeatured: function(wideFormat, featuredChildren) {
+  _hideFeatured(wideFormat, featuredChildren) {
       return !wideFormat || featuredChildren.length == 0;
   },
 
-  onLink: function(e, i) {
+  onLink(e, i) {
       this.fire("link", e);
   }
-});
+}
+
+customElements.define('tekvideo-exercise-card', TekvideoExerciseCard);

@@ -1,11 +1,13 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/iron-collapse/iron-collapse.js';
-Polymer({
-  _template: Polymer.html`
+
+class TVExerciseEditorWrapper extends PolymerElement {
+  static get template() {
+    return html`
 <style include="iron-flex"></style>
 
 <style>
@@ -30,11 +32,11 @@ Polymer({
         <hr>
     </div>
 </iron-collapse>
-`,
+`;
+  }
 
-  is: 'tv-exercise-editor-wrapper',
-
-  properties: {
+  static get properties() {
+    return {
     	name: {
           type: String,
           value: "",
@@ -44,30 +46,34 @@ Polymer({
           type: Boolean,
           value: false
       }
-  },
+    }
+  }
 
-  setEditor: function(editor) {
+  setEditor(editor) {
       this.$.content.appendChild(editor);
-  },
+  }
 
-  toggle: function() {
+  toggle() {
     	this.$.collapse.toggle();
-  },
+  }
 
-  delete: function() {
+  delete() {
       this.fire("delete");
-  },
+  }
 
-  edit: function() {
+  edit() {
       this.editMode = !this.editMode;
       var button = this.$.editButton;
       button.icon = this.editMode ? "check" : "create";
       if (this.editMode) this.$.nameInput.focus();
-  },
+  }
 
-  _onNameInput: function(e) {
+  _onNameInput(e) {
       if (e.keyCode === 13) {
           this.edit();
       }
   }
-});
+}
+  
+customElements.define('tv-exercise-editor-wrapper', TVExerciseEditorWrapper);
+

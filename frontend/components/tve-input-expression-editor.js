@@ -1,11 +1,13 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/paper-input/paper-textarea.js';
 import '@polymer/paper-input/paper-textarea.js';
 import '@polymer/paper-button/paper-button.js';
 import './tekvideo-math-field.js';
-Polymer({
-  _template: Polymer.html`
+
+class TVEInputExpressionEditor extends PolymerElement {
+  static get template() {
+    return html`
 <style include="iron-flex"></style>
 
 <style>
@@ -20,19 +22,23 @@ Polymer({
     <div><tekvideo-math-field id="expressionField"></tekvideo-math-field></div>
     <paper-button on-click="_saveExpression">Gem udtryk</paper-button>
 </div>
-`,
+`;
+  }
 
-  is: 'tve-input-expression-editor',
-
-  properties: {
+  static get properties() {
+    return {
       content: {
           type: String,
           value: "",
           notify: true
       }
-  },
+    };
+  }
 
-  _saveExpression: function() {
+  _saveExpression() {
       this.content = this.$.expressionField.value;
   }
-});
+}
+
+customElements.define('tve-input-expression-editor', TVEInputExpressionEditor);
+

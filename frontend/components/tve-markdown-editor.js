@@ -1,9 +1,11 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/paper-input/paper-textarea.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
-Polymer({
-  _template: Polymer.html`
+
+class TVEMarkdownEditor extends PolymerElement {
+  static get template() {
+    return html`
 <style include="iron-flex"></style>
 
 <style>
@@ -20,15 +22,19 @@ paper-dialog {
     <paper-textarea label="Indhold" rows="10" value="{{content}}">
     </paper-textarea>
 </div>
-`,
+`;
+  }
 
-  is: 'tve-markdown-editor',
-
-  properties: {
+  static get properties() {
+    return {
       content: {
           type: String,
           value: "",
           notify: true
       }
+    }
   }
-});
+}
+
+customElements.define('tve-markdown-editor', TVEMarkdownEditor);
+

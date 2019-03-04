@@ -1,4 +1,4 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
@@ -6,8 +6,10 @@ import '@polymer/paper-checkbox/paper-checkbox.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
 import '@polymer/paper-tooltip/paper-tooltip.js';
-Polymer({
-  _template: Polymer.html`
+
+class TVExerciseMultipleChoiseEditor extends PolymerElement {
+  static get template() {
+    return html`
 <style include="iron-flex"></style>
 
 <style>
@@ -34,11 +36,11 @@ Polymer({
 <paper-checkbox checked="{{randomizeorder}}">Randomiser rækkefølge</paper-checkbox>
 <paper-checkbox checked="{{selectmultiple}}">Vælg alle</paper-checkbox>
 </div>
-`,
+`;
+  }
 
-  is: 'tv-exercise-multiple-choice-editor',
-
-  properties: {
+  static get properties() {
+    return {
       selectmultiple: {
         	type: Boolean,
         	value: false,
@@ -54,9 +56,10 @@ Polymer({
           value: [{ title: window.itemToAddValue, correct: false }],
           notify: true
       }
-  },
+    }
+  }
 
-  _notify: function(e) {
+  _notify(e) {
       if (e.keyCode === 13) {
           this._addItem();
       } else {
@@ -64,9 +67,9 @@ Polymer({
           console.log(this.choices);
           this.choices = copy;
       }
-  },
+  }
 
-  _addItem: function() {
+  _addItem() {
       var copy = this.choices.slice();
       copy.push({ title: this.itemToAddValue, correct: false });
       console.log(copy);
@@ -76,16 +79,19 @@ Polymer({
       var self = this;
       setTimeout(function() {
           // Nice hack.
-          var inputs = Polymer.dom(self.root).querySelectorAll('paper-input');
+          var inputs = this.shadowRoot.querySelectorAll('paper-input');
           if (inputs && inputs.length > 0) {
               inputs[inputs.length - 1].$.input.focus();
           }
       }, 100);
-  },
+  }
 
-  delete: function(e) {
+  delete(e) {
       var index = e.target.getAttribute("data-index");
       this.choices.splice(index, 1);
       this.choices = this.choices.slice();
   }
-});
+}
+
+
+customElements.define('tv-exercise-multiple-choice-editor', TVExerciseMultipleChoiseEditor);

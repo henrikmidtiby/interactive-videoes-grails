@@ -1,4 +1,4 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/iron-icon/iron-icon.js';
@@ -37,8 +37,9 @@ function shuffle(a) {
 
 var hasStorage = storageAvailable("localStorage");
 
-Polymer({
-  _template: Polymer.html`
+class TVEGroupRenderer extends PolymerElement {
+  return { 
+    html`
 <style is="custom-style">
 .checkmark {
     color: var(--paper-green-500);
@@ -134,19 +135,20 @@ th, td {
             
     </div>
 </iron-pages>
-`,
+`};
+  }
 
-  is: 'tve-group-renderer',
-  observers: [],
-
-  properties: {
+  static get properties() {
+    return {
       exercisePool: {
           type: Array,
-          value: []
+          value: [],
+          observer: '_observePool'
       },
       completed: {
           type: Array,
-          value: []
+          value: [],
+          observer: '_observeCompleted'
       },
       name: {
           type: String,
@@ -172,11 +174,10 @@ th, td {
           type: Array,
           value: null
       }
-  },
+    };
+  }
 
-  observers: ["_observePool(exercisePool)", "_observeCompleted(completed)"],
-
-  ready: function() {
+  ready() {
       var self = this;
       var renderer = this.$.renderer;
 
@@ -195,9 +196,9 @@ th, td {
       if (this.exercisePool && this.exercisePool.length > 0) {
           this.displayNext();
       }
-  },
+  }
 
-  _countDownForNext: function(time) {
+  _countDownForNext(time) {
       var self = this;
       self._countdown = time;
       self._currentTimer = setTimeout(function() {
@@ -207,9 +208,9 @@ th, td {
               self.displayNext();
           }
       }, 1000);
-  },
+  }
 
-  _goToItem: function(e) {
+  _goToItem(e) {
       var identifier = e.model.item.identifier;
       var idx = this._assignmentOrder.map(function(e) { 
           return e.identifier; 
@@ -218,15 +219,15 @@ th, td {
       if (idx !== -1) {
           this.display(idx);
       }
-  },
+  }
 
-  stopCountdown: function() {
+  stopCountdown() {
       clearTimeout(this._currentTimer);
       this._selectedPage = 0;
       this.$.renderer.isInteractive = true;
-  },
+  }
 
-  displayNext: function() {
+  displayNext() {
       this.stopCountdown();
       // Hack for ensuring that exercises are shown in firefox. 
       // For some (unknown) reason, the value of this.currentExercise
@@ -237,13 +238,13 @@ th, td {
       }
       var next = (this.currentExercise + 1) % this.exercisePool.length;
       this.display(next);
-  },
+  }
 
-  backToMenu: function() {
+  backToMenu() {
       this.fire("backToMenu");
-  },
+  }
 
-  markAsCorrect: function(ids) {
+  markAsCorrect(ids) {
       var localStatus = this._getLocalStatus();
       for (var i = 0; i < ids.length; i++) {
           var id = ids[i];
@@ -251,9 +252,9 @@ th, td {
       }
       this._cachedLocalStatus = localStatus;
       localStorage.completedExercises = JSON.stringify(localStatus);
-  },
+  }
 
-  _getLocalStatus: function() {
+  _getLocalStatus() {
       if (this._cachedLocalStatus != null) {
           return this._cachedLocalStatus;
       }
@@ -266,9 +267,9 @@ th, td {
 
       this._cachedLocalStatus = result;
       return result;
-  },
+  }
 
-  display: function(exerciseIdx) {
+  display(exerciseIdx) {
       this.currentExercise = exerciseIdx;
       this._selectedPage = 0;
       this.$.renderer.isInteractive = true;
@@ -281,29 +282,29 @@ th, td {
           renderer.widgets = exercise.widgets;
           renderer.identifier = exercise.identifier;
       }
-  },
+  }
 
-  showExercises: function() {
+  showExercises() {
       this._selectedPage = 2;
-  },
+  }
 
-  _computeCompletionIcon: function(item) {
+  _computeCompletionIcon(item) {
       var status = this._getLocalStatus();
       return item.identifier in status ? "check" : "close";
-  },
+  }
 
-  _observePool: function() {
+  _observePool() {
       if (this.exercisePool.length > 0) {
           this._assignmentOrder = this._createAssignmentOrder(this.exercisePool);
           this.displayNext();
       }
-  },
+  }
 
-  _observeCompleted: function(completed) {
+  _observeCompleted(completed) {
       this.markAsCorrect(completed);
-  },
+  }
 
-  _createAssignmentOrder: function(pool) {
+  _createAssignmentOrder(pool) {
       var status = this._getLocalStatus();
       var complete = [];
       var incomplete = [];
@@ -319,9 +320,9 @@ th, td {
       shuffle(incomplete);
       this._incompleteIndex = incomplete.length;
       return incomplete.concat(complete);
-  },
+  }
 
-  _hasCompletedAll: function() {
+  _hasCompletedAll() {
       var result = this.currentExercise >= this._incompleteIndex || 
           this.currentExercise == this.exercisePool.length - 1;
       if (result) {
@@ -329,4 +330,6 @@ th, td {
       }
       return result;
   }
-});
+}
+  
+customElements.define('tve-group-renderer', TVEGroupRenderer);

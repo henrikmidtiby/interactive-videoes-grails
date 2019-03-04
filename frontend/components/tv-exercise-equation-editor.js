@@ -1,8 +1,10 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/paper-input/paper-textarea.js';
-Polymer({
-  _template: Polymer.html`
+
+class TVExerciseEquationEditor extends PolymerElement {
+  static get template() {
+    return html`
 <style include="iron-flex"></style>
 
 <style>
@@ -12,15 +14,18 @@ Polymer({
 </style>
 
 <paper-textarea label="LaTeX" value="{{content}}"></paper-textarea>
-`,
+`;
+  }
 
-  is: 'tv-exercise-equation-editor',
-
-  properties: {
+  static get properties() {
+    return {
       content: {
         	type: String,
         	value: "",
         	notify: true
       }
+    };
   }
-});
+}
+
+customElements.define('tv-exercise-equation-editor', TVExerciseEquationEditor);

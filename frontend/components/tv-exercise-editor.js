@@ -1,4 +1,4 @@
-import '@polymer/polymer/polymer-legacy.js';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
@@ -28,8 +28,9 @@ var PAGE_EDITOR = 0;
 var PAGE_PREVIEW = 1;
 var PAGE_JSON = 2;
 
-Polymer({
-  _template: Polymer.html`
+class TVExerciseEditor extends PolymerElement {
+  static get template() {
+    return html`
 <style include="iron-flex"></style>
 
 <style>
@@ -113,11 +114,11 @@ paper-tabs {
         </div>
     </div>
 </iron-pages>
-`,
+`;
+  }
 
-  is: 'tv-exercise-editor',
-
-  properties: {
+  static get properties() {
+    return {
       name: {
           type: String,
           value: "",
@@ -138,7 +139,8 @@ paper-tabs {
       },
       selectedPage: {
           type: Number,
-          value: 0
+          value: 0, 
+          observer: '_observeSelectedPage'
       },
       documentContent: {
           type: String,
@@ -157,20 +159,20 @@ paper-tabs {
           type: Boolean,
           value: false
       }
-  },
+    }
+  }
 
-  observers: ["_observeSelectedPage(selectedPage)"],
-
-  ready: function() {
+  ready() {
       var self = this;
+      console.log(this.shadowRoot);
       this.$.templateSelector.addEventListener("insert", function(e) {
           var data = e.detail.object;
           self.$.inputJsonField.value = JSON.stringify(data, null, 2);
           self._sync();
       });
-  },
+  }
 
-  attached: function() {
+  attached() {
       var items = [];
       for (name in TekVideo.WidgetConfiguration) {
           var config = TekVideo.WidgetConfiguration[name];
@@ -189,9 +191,9 @@ paper-tabs {
       }
       this._widgets = items;
       this.$.widgetDropdown.selected = 0;
-  },
+  }
 
-  addWidget: function(widget, name) {
+  addWidget(widget, name) {
       var self = this;
 
       var widgetConfig = TekVideo.WidgetConfiguration[widget.type];
@@ -232,33 +234,33 @@ paper-tabs {
               delete self.widgets[widget.name];
           });
       }
-  },
+  }
 
-  _setupPropertyListener: function(i, editor, widget, wrapper, widgetConfig) {
+  _setupPropertyListener(i, editor, widget, wrapper, widgetConfig) {
       var self = this;
       var property = widgetConfig.properties[i];
       editor.addEventListener(property + "-changed", function(ev) {
           self.widgets[widget.name].properties[property] = editor[property];
       });
-  },
+  }
 
-  _addWidget: function() {
+  _addWidget() {
       var type = this.$.widgetDropdown.selectedItem.shortName;
       this.addWidget({
           "type": type,
           "properties": { }
       });
-  },
+  }
 
-  _computeJSON: function(widgetsSplices) {
+  _computeJSON(widgetsSplices) {
       return JSON.stringify({
           name: this.name,
           document: this.documentContent,
           widgets: this.widgets
       }, null, 2);
-  },
+  }
 
-  _sync: function() {
+  _sync() {
       var value = JSON.parse(this.$.inputJsonField.value);
       this.widgets = {};
       this.$.editors.innerHTML = "";
@@ -269,9 +271,9 @@ paper-tabs {
       this.name = value.name;
       // TODO Hack
       this._observeSelectedPage(PAGE_JSON);
-  },
+  }
 
-  _observeSelectedPage: function(selectedPage) {
+  _observeSelectedPage(selectedPage) {
       switch (selectedPage) {
           case PAGE_PREVIEW:
               this.$.renderer.content = this.documentContent;
@@ -282,13 +284,13 @@ paper-tabs {
               this.widgets = JSON.parse(JSON.stringify(this.widgets));
               break;
       }
-  },
+  }
 
-  _save: function() {
+  _save() {
       this.fire("save");
-  },
+  }
 
-  update: function() {
+  update() {
       // TODO Hack
       var obj = {
           document: this.documentContent,
@@ -298,4 +300,7 @@ paper-tabs {
       this.$.inputJsonField.value = JSON.stringify(obj);
       this._sync();
   }
-});
+}
+
+customElements.define('tv-exercise-editor', TVExerciseEditor);
+
