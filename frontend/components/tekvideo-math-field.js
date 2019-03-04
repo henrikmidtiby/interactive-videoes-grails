@@ -45,13 +45,18 @@ class TekvideoMathField extends PolymerElement {
     }
   }
 
+  static get is() {
+    return "tekvideo-math-field";
+  }
+
   constructor() {
     super();
     this._shouldUpdate = true;
     this._mathField = null;
   }
 
-  attached() {
+  ready() {
+      super.ready();
       addExtSheet(this.shadowRoot, this.resolveUrl("/assets/vendor/mathquill2.css"));
       var self = this;
       var editor = this.$.editor;

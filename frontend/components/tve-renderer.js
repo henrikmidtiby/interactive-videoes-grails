@@ -181,10 +181,12 @@ paper-button {
       component.dataset.isWidget = true;
 
       component.addEventListener("action", function(e) {
-          self.fire("widget-action", {
-              widget: component,
-              detail: e.detail
-          });
+          var event = new CustomEvent("widget-action", 
+                                      {bubbles: true, 
+                                       composed: true, 
+                                       widget: component, 
+                                       detail: e.detail});
+          self.dispatchEvent(event);
       });
       return component;
   }
@@ -192,7 +194,7 @@ paper-button {
   checkAnswers() {
       var GRADED_WIDGET_METHODS = ["grade", "validate"];
 
-      var widgets = [].map.call(Polymer.dom(this.root).querySelectorAll("[data-is-widget]"), 
+      var widgets = [].map.call(this.shadowRoot.querySelectorAll("[data-is-widget]"), 
           function(el) { return el; })
 
       var gradedWidgets = widgets.filter(function(widget) {
@@ -239,11 +241,12 @@ paper-button {
       if (passes) this.setStatus(1);
       else this.setStatus(3);
 
-      this.fire("grade", {
-          identifier: this.identifier,
-          passes: passes,
-          widgetResults: widgetResults
-      });
+      var event = new CustomEvent("grade", 
+                                  {bubbles: true, composed: true, 
+                                   identifier: this.identifier, 
+                                   passes: passes, 
+                                   widgetResults: widgetResults});
+      self.dispatchEvent(event);
   }
 
   beginSpinning(status) {
