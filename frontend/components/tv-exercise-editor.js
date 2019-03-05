@@ -23,7 +23,7 @@ import './tve-sorter-editor.js';
 import './tv-exercise-editor-wrapper.js';
 import './tve-renderer.js';
 import './tve-template-selector.js';
-import './tve-widget-config.js';
+import TekVideoWidgetConfig from './tve-widget-config.js';
 var PAGE_EDITOR = 0;
 var PAGE_PREVIEW = 1;
 var PAGE_JSON = 2;
@@ -175,8 +175,8 @@ paper-tabs {
   connectedCallback() {
       super.connectedCallback();
       var items = [];
-      for (name in TekVideo.WidgetConfiguration) {
-          var config = TekVideo.WidgetConfiguration[name];
+      for (name in TekVideoWidgetConfig.WidgetConfiguration) {
+          var config = TekVideoWidgetConfig.WidgetConfiguration[name];
 
           var title = config.name;
           if (config.properties.length === 1 && 
@@ -197,7 +197,7 @@ paper-tabs {
   addWidget(widget, name) {
       var self = this;
 
-      var widgetConfig = TekVideo.WidgetConfiguration[widget.type];
+      var widgetConfig = TekVideoWidgetConfig.WidgetConfiguration[widget.type];
       if (widgetConfig) {
           var editor = document.createElement(widgetConfig.editor);
 

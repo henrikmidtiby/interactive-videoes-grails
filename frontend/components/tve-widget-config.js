@@ -6,10 +6,10 @@ import './tve-matrix.js';
 import './tve-inline-equation.js';
 import './tve-sorter.js';
 
-var TekVideo = TekVideo || {};
-TekVideo.WidgetConfiguration = {};
+var TekVideoWidgetConfig = TekVideoWidgetConfig || {};
+TekVideoWidgetConfig.WidgetConfiguration = {};
 function registerWidgetType(name, shortName, component, editor, properties) {
-    TekVideo.WidgetConfiguration[shortName] = {
+    TekVideoWidgetConfig.WidgetConfiguration[shortName] = {
         name: name,
         shortName: shortName,
         component: component,
@@ -73,4 +73,4 @@ registerWidgetType(
     ["columnnamea", "columnnameb", "values"]
 );
 
-export default TekVideo;
+export default TekVideoWidgetConfig;
