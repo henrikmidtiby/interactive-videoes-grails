@@ -1,6 +1,7 @@
 {
   "entrypoint": "test-tve-status-indicator.html",
   "fragments": [
+    "tests.html",
     "exercises.html",
     "test-tve-inline-equation.html",
     "test-tve-exercise-equation.html",
