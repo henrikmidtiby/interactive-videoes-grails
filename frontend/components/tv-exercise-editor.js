@@ -163,8 +163,8 @@ paper-tabs {
   }
 
   ready() {
+      super.ready();
       var self = this;
-      console.log(this.shadowRoot);
       this.$.templateSelector.addEventListener("insert", function(e) {
           var data = e.detail.object;
           self.$.inputJsonField.value = JSON.stringify(data, null, 2);
@@ -172,7 +172,8 @@ paper-tabs {
       });
   }
 
-  attached() {
+  connectedCallback() {
+      super.connectedCallback();
       var items = [];
       for (name in TekVideo.WidgetConfiguration) {
           var config = TekVideo.WidgetConfiguration[name];
