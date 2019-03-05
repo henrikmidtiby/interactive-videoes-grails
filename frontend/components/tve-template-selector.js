@@ -93,7 +93,8 @@ paper-icon-button.template-icon {
   insertTemplate(name) {
       var template = TekVideoTemplates.Templates[name];
       if (template) {
-          this.fire("insert", template);
+          var event = new CustomEvent('insert', {detail: template, bubbles: true, composed: true});
+          this.dispatchEvent(event);
       }
   }
 
