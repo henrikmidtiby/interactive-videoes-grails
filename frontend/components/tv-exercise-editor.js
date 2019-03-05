@@ -268,7 +268,7 @@ paper-tabs {
       this.widgets = {};
       this.$.editors.innerHTML = "";
       this.documentContent = value.document;
-      for (a in value.widgets) {
+      for (var a in value.widgets) {
           this.addWidget(value.widgets[a], value.widgets[a].name);
       }
       this.name = value.name;
