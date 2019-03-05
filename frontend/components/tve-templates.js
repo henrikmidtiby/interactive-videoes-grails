@@ -1,8 +1,8 @@
-var TekVideo = TekVideo || {};
-TekVideo.Templates = {};
+var TekVideoTemplates = TekVideoTemplates || {};
+TekVideoTemplates.Templates = {};
 
 function registerTemplate(name, description, object) {
-    TekVideo.Templates[name] = {
+    TekVideoTemplates.Templates[name] = {
         name: name,
         description: description,
         object: object
@@ -158,3 +158,5 @@ registerTemplate("Eksempel 3", "En eksempel opgave om ligningssystemer", {
     }
   }
 });
+
+export default TekVideoTemplates;

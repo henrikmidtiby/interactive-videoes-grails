@@ -6,7 +6,7 @@ import '@polymer/iron-collapse/iron-collapse.js';
 import '@polymer/iron-image/iron-image.js';
 import '@polymer/paper-card/paper-card.js';
 import './tve-renderer.js';
-import './tve-templates.js';
+import TekVideoTemplates from './tve-templates.js';
 
 class TVETemplateSelector extends PolymerElement {
   static get template() {
@@ -91,7 +91,7 @@ paper-icon-button.template-icon {
   }
 
   insertTemplate(name) {
-      var template = TekVideo.Templates[name];
+      var template = TekVideoTemplates.Templates[name];
       if (template) {
           this.fire("insert", template);
       }
@@ -104,7 +104,7 @@ paper-icon-button.template-icon {
   }
 
   _computeTemplates() {
-      var templates = TekVideo.Templates;
+      var templates = TekVideoTemplates.Templates;
       var res = [];
       for (var key in templates) {
           res.push(templates[key]);
