@@ -71,6 +71,7 @@ paper-button {
       },
       content: {
           type: String,
+          value: '',
           observer: '_observeDocument'
       },
       widgets: {
