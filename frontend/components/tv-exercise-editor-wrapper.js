@@ -58,7 +58,11 @@ class TVExerciseEditorWrapper extends PolymerElement {
   }
 
   delete() {
-      this.fire("delete");
+    console.log("delete event dispatched");
+    var event = new CustomEvent("delete", 
+                                {bubbles: true, 
+                                 composed: true}); 
+    self.dispatchEvent(event);
   }
 
   edit() {
