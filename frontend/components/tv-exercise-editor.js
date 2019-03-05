@@ -202,6 +202,9 @@ paper-tabs {
           var editor = document.createElement(widgetConfig.editor);
 
           var wrapper = document.createElement("tv-exercise-editor-wrapper");
+          this.$.editors.appendChild(wrapper);
+
+          wrapper = this.$.editors.lastChild;
           wrapper.setEditor(editor); // Cross-platform hack
           if (!name) {
               wrapper.name = "ny-" + widget.type + self._counter;
@@ -211,7 +214,6 @@ paper-tabs {
           }
           widget.name = wrapper.name;
           this.widgets[widget.name] = widget;
-          this.$.editors.appendChild(wrapper);
 
           for (var property in widget.properties) {
               var value = widget.properties[property];
