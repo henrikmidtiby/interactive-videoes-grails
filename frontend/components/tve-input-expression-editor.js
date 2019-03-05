@@ -30,13 +30,18 @@ class TVEInputExpressionEditor extends PolymerElement {
       content: {
           type: String,
           value: "",
-          notify: true
+          notify: true,
+          observer: '_observeContent'
       }
     };
   }
 
   _saveExpression() {
       this.content = this.$.expressionField.value;
+  }
+
+  _observeContent(content) {
+    this.$.expressionField.value = content;
   }
 }
 
