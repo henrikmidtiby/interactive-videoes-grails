@@ -37,11 +37,11 @@ class TVExerciseEditorWrapper extends PolymerElement {
 
   static get properties() {
     return {
-    	name: {
+      name: {
           type: String,
           value: "",
           notify: true
-    	},
+      },
       editMode: {
           type: Boolean,
           value: false
@@ -50,11 +50,11 @@ class TVExerciseEditorWrapper extends PolymerElement {
   }
 
   setEditor(editor) {
-      this.$.content.appendChild(editor);
+    this.$.content.appendChild(editor);
   }
 
   toggle() {
-    	this.$.collapse.toggle();
+    this.$.collapse.toggle();
   }
 
   delete() {
@@ -62,10 +62,10 @@ class TVExerciseEditorWrapper extends PolymerElement {
   }
 
   edit() {
-      this.editMode = !this.editMode;
-      var button = this.$.editButton;
-      button.icon = this.editMode ? "check" : "create";
-      if (this.editMode) this.$.nameInput.focus();
+    this.editMode = !this.editMode;
+    var button = this.$.editButton;
+    button.icon = this.editMode ? "check" : "create";
+    if (this.editMode) this.$.nameInput.focus();
   }
 
   _onNameInput(e) {
