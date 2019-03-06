@@ -45,7 +45,8 @@
     "@polymer/polymer": "^3.0.0",
     "@webcomponents/webcomponentsjs": "^1.0.20",
     "katex": "^0.10.1",
-    "marked": "~0.3.9"
+    "marked": "~0.3.9",
+    "web-animations-js": "^2.3.1"
   },
   "resolutions": {
     "@webcomponents/webcomponentsjs": "1.0.20",
