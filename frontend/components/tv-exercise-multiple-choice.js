@@ -103,8 +103,8 @@ paper-checkbox {
       var selected = [];
 
       var items = this.selectmultiple ? 
-          Polymer.dom(this.root).querySelectorAll("paper-checkbox") : 
-          Polymer.dom(this.root).querySelectorAll("paper-radio-button");
+          this.shadowRoot.querySelectorAll("paper-checkbox") : 
+          this.shadowRoot.querySelectorAll("paper-radio-button");
 
       for (var i = 0; i < items.length; i++) {
           var item = items[i];
