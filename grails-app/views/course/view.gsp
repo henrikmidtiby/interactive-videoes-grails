@@ -4,9 +4,8 @@
 <head>
     <meta name="layout" content="main_fluid">
     <title>${title}</title>
-    <g:render template="/polymer/includePolymer"/>
 
-    <sdu:appResourceImport href="components/tv-browser.html"/>
+    <sdu:appJavascriptModuleImport href="components/tv-browser.js" />
 </head>
 
 <body>
