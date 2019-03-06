@@ -5,6 +5,11 @@ import grails.util.Environment
 class FrontendTagLib {
     static namespace = "sdu"
 
+    def appJavascriptModuleImport = { attrs, body ->
+        String resource = attrs.remove("href")
+        out << "<script type=\"module\" src=\"${pathToResource(resource)}\">"
+    }
+
     def appResourceImport = { attrs, body ->
         String resource = attrs.remove("href")
         out << "<link rel=\"import\" href=\"${pathToResource(resource)}\">"

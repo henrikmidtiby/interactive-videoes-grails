@@ -6,9 +6,7 @@
     <meta name="layout" content="main_fluid"/>
     <title>${exercise.name}</title>
 
-    <g:render template="/polymer/includePolymer"/>
-
-    <sdu:appResourceImport href="components/exercise-editor/tve-group-renderer.html" />
+    <sdu:appJavascriptModuleImport href="components/tve-group-renderer.js" />
     <style>
     .polymer {
         font-family: 'Roboto', 'Noto', sans-serif;
