@@ -6,7 +6,7 @@ import org.springframework.security.access.annotation.Secured
 @Secured("permitAll")
 class FrontendController {
     static defaultAction = "serve"
-    private static ROOT_DIR = new File("frontend")
+    private static ROOT_DIR = new File("frontend/build/default")
 
     def serve(String path) {
         if (Environment.current != Environment.PRODUCTION) {
