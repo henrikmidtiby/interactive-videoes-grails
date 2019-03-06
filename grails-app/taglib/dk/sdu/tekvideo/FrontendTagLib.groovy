@@ -7,7 +7,7 @@ class FrontendTagLib {
 
     def appJavascriptModuleImport = { attrs, body ->
         String resource = attrs.remove("href")
-        out << "<script type=\"module\" src=\"${pathToResource(resource)}\">"
+        out << "<script type=\"module\" src=\"${pathToResource(resource)}\"></script>"
     }
 
     def appResourceImport = { attrs, body ->
