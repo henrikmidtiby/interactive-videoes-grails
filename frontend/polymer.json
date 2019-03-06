@@ -14,6 +14,7 @@
     "test-tve-renderer_two.html",
     "test-tve-renderer_three.html",
     "test-tve-renderer_four.html",
+    "test-tekvideo-exercise-card.html",
     "test-tekvideo-math-field.html"
   ],
    "lint": {
