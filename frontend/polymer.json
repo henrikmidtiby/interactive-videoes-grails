@@ -15,5 +15,19 @@
     "test-tve-renderer_three.html",
     "test-tve-renderer_four.html",
     "test-tekvideo-math-field.html"
+  ],
+   "lint": {
+    "rules": ["polymer-2"]
+  },
+  "builds": [
+    { 
+      "name": "default",
+      "addServiceWorker": false,
+      "js": {"minify": false, "compile": false},
+      "css": {"minify": false},
+      "html": {"minify": false},
+      "bundle": false,
+      "addPushManifest": false
+    }
   ]
 }
