@@ -41,7 +41,6 @@ input:placeholder-shown {
         <template is="dom-repeat" items="{{_generateRange(width)}}" index-as="col">
             <span>
                 <input is="iron-input" placeholder=" " data-column\$="{{col}}" data-row\$="{{row}}" on-change="_updateMatrix">
-                
             </span>
         </template>
     </div>
@@ -62,8 +61,7 @@ input:placeholder-shown {
       value: {
           type: Array,
           value: [],
-          notify: true,
-          observer: '_observeValue'
+          notify: true
       }
     }
   }
@@ -95,7 +93,8 @@ input:placeholder-shown {
       for (var i = 0; i < this.height; i++) {
           var rowComponents = [];
           for (var j = 0; j < this.width; j++) {
-              var field = this.$$('[data-column*="' + j + '"][data-row*="' + i + '"]');
+              var query_string = '[data-column="' + j + '"][data-row="' + i + '"]';
+              var field = this.shadowRoot.querySelector(query_string);
               rowComponents.push(field);
 
               if (field.value !== "") {
@@ -124,20 +123,6 @@ input:placeholder-shown {
       }
 
       this.value = result;
-  }
-
-  _observeValue(value) {
-    // TODO: Displaying the initial values of a matrix does not work.
-    // I think the issue is with the query shown below.
-    // console.log(this.shadowRoot.querySelectorAll('[data-column*="1"]'));
-    for (var i = 0; i < this.height; i++) {
-      for (var j = 0; j < this.width; j++) {
-        // var field = this.$$('[data-column*="' + j + '"][data-row*="' + i + '"]');
-        var field = this.shadowRoot.querySelector('[data-column*="' + j + '"][data-row*="' + i + '"]');
-        console.log(field);
-        field.value = '1';
-      }
-    }
   }
 }
 
