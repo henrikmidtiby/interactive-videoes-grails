@@ -44,8 +44,9 @@
     "@polymer/paper-tooltip": "^3.0.0",
     "@polymer/polymer": "^3.0.0",
     "@webcomponents/webcomponentsjs": "^1.0.20",
+    "jquery": "^3.3.1",
     "katex": "^0.10.1",
-    "marked": "~0.3.9",
+    "marked": "^0.6.1",
     "web-animations-js": "^2.3.1"
   },
   "resolutions": {
