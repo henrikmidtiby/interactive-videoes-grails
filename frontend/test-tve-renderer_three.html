@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.js" integrity="sha384-ern5NCRqs6nJ/a4Ik0nB9hnKVH5HwV2XRUYdQl09OB/vvd1Lmmqbg1Mh+mYUclXx" crossorigin="anonymous"></script>
+  <script type="module" src="./components/tve-renderer.js"></script>
+</head>
+<body>
+
+<tve-renderer id="renderer" content=""></tve-renderer>
+
+<script type="module">
+var exercise = {
+  "name": "Eksempel 2",
+  "document": "# Typer af differentialligninger\n\nDifferentialligningen [[eql \\frac{dy}{dx} = \\frac{y}{x^2}]] er:\n\n[[ref multiple-choice]]\n\n[[ref hint-1]]\n\n[[ref hint-2]]\n\n[[ref hint-3]]",
+  "widgets": {
+    "multiple-choice": {
+      "type": "multiple-choice",
+      "properties": {
+        "choices": [
+          {
+            "title": "separabel",
+            "correct": false
+          },
+          {
+            "title": "første ordens linær",
+            "correct": false
+          },
+          {
+            "title": "både separabel og første ordens linær ",
+            "correct": true
+          },
+          {
+            "title": "hverken separabel eller første ordens linær ",
+            "correct": false
+          }
+        ]
+      },
+      "name": "multiple-choice"
+    },
+    "hint-1": {
+      "type": "hint",
+      "properties": {
+        "content": "Ligningen kan skrives på formen:\n\n[[eq \\frac{dy}{dx} = \\frac{1}{x^2} \\cdot y]]"
+      },
+      "name": "hint-1"
+    },
+    "hint-2": {
+      "type": "hint",
+      "properties": {
+        "content": "Ligningen kan skrives på formen:\n\n[[eq \\frac{dy}{dx} + \\frac{-1}{x^2} \\cdot y = 0]]"
+      },
+      "name": "hint-2"
+    },
+    "hint-3": {
+      "type": "hint",
+      "properties": {
+        "content": "Hint 1 viser at ligningen er separabel\n\nHint 2 viser at ligningen er en første ordens linær "
+      },
+      "name": "hint-3"
+    }
+  }
+};
+
+var renderer = document.getElementById("renderer");
+renderer.isInteractive = true;
+renderer.content = exercise.document;
+renderer.widgets = exercise.widgets;
+renderer.identifier = 123;
+</script>
+</body>

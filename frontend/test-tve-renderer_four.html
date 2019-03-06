@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.js" integrity="sha384-ern5NCRqs6nJ/a4Ik0nB9hnKVH5HwV2XRUYdQl09OB/vvd1Lmmqbg1Mh+mYUclXx" crossorigin="anonymous"></script>
+  <script type="module" src="./components/tve-renderer.js"></script>
+</head>
+<body>
+
+<tve-renderer id="renderer" content=""></tve-renderer>
+
+<script type="module">
+var exercise = 
+{
+  "name": "Eksempel 1",
+  "document": "# Ligningssystem på matrixform\n\nGivet de tre ligninger: [[eql x + y = 2]], [[eql z + x = 2]] og [[eql x + y + z = 3]].\n\nAngiv [[eql A]] og [[eql \\vec{b}]] når ligningssystemet skrives på formen [[eql A = \\begin{pmatrix} x \\\\\\\\ y \\\\\\\\ z\\end{pmatrix} = \\vec{b} ]]\n\n[[eql A =]] [[ref a-matrix-input]]\n\n[[eql \\vec{b} =]] [[ref b-matrix-input]]\n\n[[ref hint-1]]\n\n[[ref hint-2]]",
+  "widgets": {
+    "b-matrix-input": {
+      "type": "matrix",
+      "properties": {
+        "height": "5",
+        "width": "1",
+        "answer": [
+          [
+            "2"
+          ],
+          [
+            "2"
+          ],
+          [
+            "3"
+          ]
+        ]
+      },
+      "name": "b-matrix-input"
+    },
+    "a-matrix-input": {
+      "type": "matrix",
+      "properties": {
+        "answer": [
+          [
+            "1",
+            "1",
+            "0"
+          ],
+          [
+            "1",
+            "0",
+            "1"
+          ],
+          [
+            "1",
+            "1",
+            "1"
+          ]
+        ],
+        "height": "5",
+        "width": "5"
+      },
+      "name": "a-matrix-input"
+    },
+    "hint-1": {
+      "type": "hint",
+      "properties": {
+        "content": "Skriv ligningerne op så de ubekendte står i følgende rækkefølge [[eql x]], [[eql y]], og [[eql z]]. Desuden skal der være en koefficient til alle led.\n\n[[eq 1 \\cdot x + 1 \\cdot y + 0 \\cdot z = 2]]\n[[eq 1 \\cdot x + 0 \\cdot y + 1 \\cdot z = 2]]\n[[eq 1 \\cdot x + 1 \\cdot y + 0 \\cdot z = 3]]"
+      },
+      "name": "hint-1"
+    },
+    "hint-2": {
+      "type": "hint",
+      "properties": {
+        "content": "Saml koefficienterne i [[eql A]].\n\n[[eq A = \\begin{pmatrix}\n1 & 1 & 0 \\\\\\\\\n1 & 0 & 1 \\\\\\\\\n1 & 1 & 1\n\\end{pmatrix}]]\n\nog konstanterne i [[eql \\vec{b}]]:\n\n[[eq \\vec{b} = \\begin{pmatrix}\n2 \\\\\\\\ 2 \\\\\\\\ 3\n\\end{pmatrix}]]"
+      },
+      "name": "hint-2"
+    }
+  }
+};
+
+var renderer = document.getElementById("renderer");
+renderer.isInteractive = true;
+renderer.content = exercise.document;
+renderer.widgets = exercise.widgets;
+renderer.identifier = 123;
+</script>
+</body>
