@@ -141,6 +141,7 @@ class TVBrowser extends PolymerElement {
       },
       _pages: {
         type: Array,
+        value: [], 
         computed: "_computePages(activeItems)"
       },
       _currentPage: {
