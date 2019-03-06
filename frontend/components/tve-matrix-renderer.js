@@ -62,12 +62,14 @@ input:placeholder-shown {
       value: {
           type: Array,
           value: [],
-          notify: true
+          notify: true,
+          observer: '_observeValue'
       }
     }
   }
 
   ready() {
+      super.ready();
       var self = this;
       this.$.matrixRepeat.addEventListener("dom-change", function() {
           setTimeout(function() {
@@ -122,6 +124,20 @@ input:placeholder-shown {
       }
 
       this.value = result;
+  }
+
+  _observeValue(value) {
+    // TODO: Displaying the initial values of a matrix does not work.
+    // I think the issue is with the query shown below.
+    // console.log(this.shadowRoot.querySelectorAll('[data-column*="1"]'));
+    for (var i = 0; i < this.height; i++) {
+      for (var j = 0; j < this.width; j++) {
+        // var field = this.$$('[data-column*="' + j + '"][data-row*="' + i + '"]');
+        var field = this.shadowRoot.querySelector('[data-column*="' + j + '"][data-row*="' + i + '"]');
+        console.log(field);
+        field.value = '1';
+      }
+    }
   }
 }
 
