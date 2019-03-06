@@ -75,12 +75,14 @@ paper-tabs {
 
         <div class="layout horizontal">
             <paper-dropdown-menu label="Widget" always-float-label="" class="flex">
-                <paper-listbox class="dropdown-content" id="widgetDropdown">
-                    <template is="dom-repeat" items="{{_widgets}}">
-                        <paper-item short-name="{{item.shortName}}">
-                            {{item.title}}
-                        </paper-item>
-                    </template>
+                <paper-listbox slot="dropdown-content" class="dropdown-content" id="widgetDropdown">
+                    <dom-repeat items="{{_widgets}}">
+                        <template>
+                            <paper-item short-name="{{item.shortName}}">
+                                {{item.title}}
+                            </paper-item>
+                        </template>
+                    </dom-repeat>
                 </paper-listbox>
             </paper-dropdown-menu>
             <paper-button id="addWidget" on-click="_addWidget">
