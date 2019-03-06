@@ -118,7 +118,7 @@ class TVESorter extends PolymerElement {
   }
 
   dragA(e) {
-      var dom = Polymer.dom(this.root);
+      var dom = this.shadowRoot;
       var items = dom.querySelectorAll(".itemA");
       for (var i = 0; i < items.length; i++) {
           if (i === e.model.index) continue;
@@ -148,7 +148,7 @@ class TVESorter extends PolymerElement {
   }
 
   dragEndA(e) {
-      var dom = Polymer.dom(this.root);
+      var dom = this.shadowRoot;
       var items = dom.querySelectorAll(".itemA");
       for (var i = 0; i < items.length; i++) {
           items[i].classList.remove("dropzone");
