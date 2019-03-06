@@ -147,7 +147,7 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
 
   _hasThumbnail(thumbnail) {
       return thumbnail != null;
-  },
+  }
 
   _computeShortDescription(description, maxDescriptionLength) {
       if (description.length > maxDescriptionLength) {
@@ -155,15 +155,15 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
       } else {
           return description;
       }
-  },
+  }
 
   _isLastBreadcrumb(index) {
       return index == this.breadcrumbs.length -1;
-  },
+  }
 
   _hideFeatured(wideFormat, featuredChildren) {
       return !wideFormat || featuredChildren.length == 0;
-  },
+  }
 
   onLink(e, i) {
       this.fire("link", e);
