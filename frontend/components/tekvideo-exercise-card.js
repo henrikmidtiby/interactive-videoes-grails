@@ -138,6 +138,10 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
           type: Array,
           value: []
       },
+      thumbnail: {
+          type: String,
+          value: "#"
+      },
       url: {
           type: String,
           value: "#"
