@@ -1,12 +1,14 @@
 {
   "entrypoint": "test-tve-status-indicator.html",
   "fragments": [
+    "components/tve-group-renderer.js",
     "tests.html",
     "exercises.html",
     "test-temp.html",
     "test-tve-inline-equation.html",
     "test-tve-exercise-equation.html",
     "test-tve-explanation.html",
+    "test-tve-group-renderer.html",
     "test-tve-renderer_one.html",
     "test-tve-renderer_two.html",
     "test-tve-renderer_three.html",

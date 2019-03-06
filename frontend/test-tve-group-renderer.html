@@ -46,26 +46,6 @@
 
     renderer.exercisePool = exercisePool;
     renderer.completed = [];
-
-    renderer.addEventListener("grade", function (e) {
-        events.emit({
-            "kind": "ANSWER_WRITTEN_EXERCISE",
-            "subExercise": parseInt(e.detail.identifier),
-            "passes": e.detail.passes
-        }, true);
-    });
-
-    renderer.addEventListener("display", function (e) {
-        var identifier = parseInt(e.detail.exercise.identifier);
-        events.emit({"kind": "VISIT_WRITTEN_EXERCISE", "subExercise": identifier}, true);
-    });
-
-    renderer.addEventListener("backToMenu", function () {
-        document.location = "/t/henrikmidtiby/T-MAT1-2018/2018/1/blok00";
-    });
-
-    events.setMetaData({"exercise": 29728});
-    events.emit({"kind": "VISIT_EXERCISE"}, true);
 </script>
 
 
