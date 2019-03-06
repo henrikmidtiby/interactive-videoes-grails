@@ -8,6 +8,7 @@ import '@polymer/paper-styles/color.js';
 import '@polymer/iron-pages/iron-pages.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
 import './tve-renderer.js';
+
 function storageAvailable(type) {
     try {
         var storage = window[type],
@@ -38,8 +39,8 @@ function shuffle(a) {
 var hasStorage = storageAvailable("localStorage");
 
 class TVEGroupRenderer extends PolymerElement {
-  return { 
-    html`
+  static get template() {
+    return html`
 <style is="custom-style">
 .checkmark {
     color: var(--paper-green-500);
@@ -135,7 +136,7 @@ th, td {
             
     </div>
 </iron-pages>
-`};
+`;
   }
 
   static get properties() {
@@ -178,6 +179,7 @@ th, td {
   }
 
   ready() {
+      super.ready();
       var self = this;
       var renderer = this.$.renderer;
 

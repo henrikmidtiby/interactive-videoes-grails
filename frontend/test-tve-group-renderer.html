@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.js" integrity="sha384-ern5NCRqs6nJ/a4Ik0nB9hnKVH5HwV2XRUYdQl09OB/vvd1Lmmqbg1Mh+mYUclXx" crossorigin="anonymous"></script>
+  <script type="module" src="./components/tve-group-renderer.js"></script>
+</head>
+<body>
+
+
+
+<tve-group-renderer id="renderer"></tve-group-renderer>
+
+
+
+
+<script>
+    var renderer = document.getElementById('renderer');
+    var exercisePoolObj = {
+    
+    29736: {"name":"Simplificering 1-8","document":" \n Reducer udtrykket [[eql \\frac{12 \\cdot 3}{6 \\cdot 9}]]\n\n [[ref input1]]\n\n\n\n \n\n[[ref hint1]] \n\n[[ref hint2]] ","widgets":{"input1":{"type":"equation-input","properties":{"content":"\\frac{2}{3}"},"name":"input1"},"hint1":{"type":"hint","properties":{"content":"Omskriv udtryk\n[[eq \n\\frac{12 \\cdot 3}{6 \\cdot 9} = \\frac{6 \\cdot 2 \\cdot 3}{ 6 \\cdot 3 \\cdot 3}\n]]\n"},"name":"hint1"},"hint2":{"type":"hint","properties":{"content":"Reducer udtryk \n[[eq \n\\frac{6 \\cdot 2 \\cdot 3}{6 \\cdot 3 \\cdot 3} = \\frac{2}{3} \n]]\n"},"name":"hint2"}}},
+    
+    29729: {"name":"Simplificering 1-1","document":"\nReducer udtrykket [[eql \\frac{2a+b}{a}]]\n\n[[ref input1]]\n\n\n\n \n\n[[ref hint1]] \n\n[[ref hint2]] ","widgets":{"input1":{"type":"equation-input","properties":{"content":"2 + \\frac{b}{a}"},"name":"input1"},"hint1":{"type":"hint","properties":{"content":"Opdel  til to brøker.\n[[eq \n\\frac{2a+b}{a} = \\frac{2a}{a} + \\frac{b}{a}\n]]"},"name":"hint1"},"hint2":{"type":"hint","properties":{"content":"Reducer udtryk \n[[eq \n\\frac{2a}{a} + \\frac{b}{a}  = 2 + \\frac{b}{a}\n]]"},"name":"hint2"}}},
+    
+    29735: {"name":"Simplificering 1-7","document":" \n Reducer udtrykket [[eql \\frac{7 \\cdot 9 + 1}{3 \\cdot 8}]]\n \n [[ref input1]]\n \n\n\n \n\n[[ref hint1]] \n\n[[ref hint2]] \n\n[[ref hint3]] ","widgets":{"input1":{"type":"equation-input","properties":{"content":"\\frac{8}{3}"},"name":"input1"},"hint1":{"type":"hint","properties":{"content":"\nUdregn tæller og nævner.\n[[eq \n\\frac{7 \\cdot 9 + 1}{3 \\cdot 8} = \\frac{63+1}{24} = \\frac{64}{24}\n]]\n"},"name":"hint1"},"hint2":{"type":"hint","properties":{"content":"Omskriv udtryk \n[[eq \n\\frac{64}{24} = \\frac{8 \\cdot 8}{8 \\cdot 3}\n]] \n"},"name":"hint2"},"hint3":{"type":"hint","properties":{"content":"\nReducer udtryk \n[[eq \n\\frac{8 \\cdot 8}{8 \\cdot 3} = \\frac{8}{3}\n]]\n"},"name":"hint3"}}},
+    
+    29730: {"name":"Simplificering 1-2","document":" \n Reducer udtrykket [[eql \\frac{2 \\cdot 4}{3 \\cdot 6}]]\n \n [[ref input1]]\n \n\n\n \n\n[[ref hint1]] \n\n[[ref hint2]] ","widgets":{"input1":{"type":"equation-input","properties":{"content":"\\frac{4}{9}"},"name":"input1"},"hint1":{"type":"hint","properties":{"content":"\nOmskriv udtryk\n[[eq \n\\frac{2 \\cdot 4}{3 \\cdot 6}  = \\frac{2 \\cdot 4}{3 \\cdot 3 \\cdot 2} \n]]\n"},"name":"hint1"},"hint2":{"type":"hint","properties":{"content":"\nReducer udtryk.\n[[eq \n\\frac{2 \\cdot 4}{3 \\cdot 3 \\cdot 2}  = \\frac{2 \\cdot 4}{2 \\cdot 9} = \\frac{4}{9}\n]]\n"},"name":"hint2"}}},
+    
+    29731: {"name":"Simplificering 1-3","document":" \n Reducer udtrykket [[eql \\frac{3a+4a+a^2}{2a}]]\n \n [[ref input1]]\n \n\n\n \n\n[[ref hint1]] \n\n[[ref hint2]] \n\n[[ref hint3]] \n\n[[ref hint4]] ","widgets":{"input1":{"type":"equation-input","properties":{"content":"\\frac{7+a}{2}"},"name":"input1"},"hint1":{"type":"hint","properties":{"content":"\nBeregn tæller.\n[[eq \n\\frac{3a+4a+a^2}{2a} = \\frac{7a+a^2}{2a}\n]]\n"},"name":"hint1"},"hint2":{"type":"hint","properties":{"content":"\nOpdel brøk i to brøker.\n[[eq \n\\frac{7a+a^2}{2a}  = \\frac{7a}{2a} + \\frac{a^2}{2a} \n]]\n"},"name":"hint2"},"hint3":{"type":"hint","properties":{"content":"\nReducer udtryk\n[[eq \n\\frac{7a}{2a} + \\frac{a^2}{2a}  = \\frac{7}{2} + \\frac{a}{2}\n]]  \n"},"name":"hint3"},"hint4":{"type":"hint","properties":{"content":"\nSæt på fælles brøkstreg\n[[eq \n\\frac{7}{2} + \\frac{a}{2} = \\frac{7+a}{2} \n]]\n"},"name":"hint4"}}},
+    
+    29733: {"name":"Simplificering 1-5","document":" \n Reducer udtrykket [[eql \\frac{a \\cdot a \\cdot a \\cdot a \\cdot a + a}{a}]]\n \n [[ref input1]]\n \n\n\n \n\n[[ref hint1]] \n\n[[ref hint2]] \n\n[[ref hint3]] ","widgets":{"input1":{"type":"equation-input","properties":{"content":"a^4 + 1"},"name":"input1"},"hint1":{"type":"hint","properties":{"content":"\nReducer tæller.\n[[eq \n\\frac{a \\cdot a \\cdot a \\cdot a \\cdot a + a}{a}  = \\frac{a^5+a}{a}\n]]\n"},"name":"hint1"},"hint2":{"type":"hint","properties":{"content":"\nOpdel  til to brøker.\n[[eq \n\\frac{a^5+a}{a} = \\frac{a^5}{a} + \\frac{a}{a}\n]]\n"},"name":"hint2"},"hint3":{"type":"hint","properties":{"content":"\nReducer udtryk \n[[eq \n\\frac{a^5}{a} + \\frac{a}{a} = a^4 + 1\n]]\n"},"name":"hint3"}}},
+    
+    29734: {"name":"Simplificering 1-6","document":" \n Reducer udtrykket [[eql \\frac{2a(a+b)}{2ab}]]\n \n [[ref input1]]\n \n\n\n \n\n[[ref hint1]] \n\n[[ref hint2]] \n\n[[ref hint3]] ","widgets":{"input1":{"type":"equation-input","properties":{"content":"\\frac{a}{b} + 1"},"name":"input1"},"hint1":{"type":"hint","properties":{"content":"\nGang ind i parentes.\n[[eq \n\\frac{2a(a+b)}{2ab} = \\frac{2a^2 + 2ab}{2ab}\n]]\n"},"name":"hint1"},"hint2":{"type":"hint","properties":{"content":"\nOpdel i to brøker.\n[[eq \n\\frac{2a^2 + 2ab}{2ab} = \\frac{2a^2}{2ab} + \\frac{2ab}{2ab}\n]]\n\n"},"name":"hint2"},"hint3":{"type":"hint","properties":{"content":"\nReducer udtryk \n[[eq \n\\frac{2a^2}{2ab} + \\frac{2ab}{2ab} = \\frac{a}{b} + 1\n]]\n"},"name":"hint3"}}},
+    
+    29732: {"name":"Simplificering 1-4","document":" \n Reducer udtrykket [[eql \\frac{3 \\cdot 5}{10 \\cdot 2}]]\n \n [[ref input1]]\n \n\n\n \n\n[[ref hint1]] \n\n[[ref hint2]] ","widgets":{"input1":{"type":"equation-input","properties":{"content":"\\frac{3}{4}"},"name":"input1"},"hint1":{"type":"hint","properties":{"content":"\nOmskriv udtryk\n[[eq \n\\frac{3 \\cdot 5}{10 \\cdot 2} =  \\frac{3 \\cdot 5}{5 \\cdot 2 \\cdot 2}\n]]\n"},"name":"hint1"},"hint2":{"type":"hint","properties":{"content":"\nReducer udtryk\n[[eq \n\\frac{3 \\cdot 5}{5 \\cdot 2 \\cdot 2} = \\frac{3}{4}\n]]\n\n\n"},"name":"hint2"}}},
+    
+    };
+
+    
+    var exercisePool = [];
+    for (var key in exercisePoolObj) {
+        var obj = exercisePoolObj[key];
+        obj.identifier = key;
+        exercisePool.push(obj);
+    }
+
+    renderer.exercisePool = exercisePool;
+    renderer.completed = [];
+
+    renderer.addEventListener("grade", function (e) {
+        events.emit({
+            "kind": "ANSWER_WRITTEN_EXERCISE",
+            "subExercise": parseInt(e.detail.identifier),
+            "passes": e.detail.passes
+        }, true);
+    });
+
+    renderer.addEventListener("display", function (e) {
+        var identifier = parseInt(e.detail.exercise.identifier);
+        events.emit({"kind": "VISIT_WRITTEN_EXERCISE", "subExercise": identifier}, true);
+    });
+
+    renderer.addEventListener("backToMenu", function () {
+        document.location = "/t/henrikmidtiby/T-MAT1-2018/2018/1/blok00";
+    });
+
+    events.setMetaData({"exercise": 29728});
+    events.emit({"kind": "VISIT_EXERCISE"}, true);
+</script>
+
+
+</body>
