@@ -17,25 +17,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <title>My App</title>
 
   <meta name="theme-color" content="#fff">
-  <script>
-    // setup Polymer options
-    window.Polymer = {lazyRegister: true, dom: 'shadow'};
-
-    // load webcomponents polyfills
-    (function() {
-      if ('registerElement' in document
-          && 'import' in document.createElement('link')
-          && 'content' in document.createElement('template')) {
-        // browser has web components
-      } else {
-        // polyfill web components
-        var e = document.createElement('script');
-        e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
-        document.head.appendChild(e);
-      }
-    })();
-
-  </script>
+//  <script>
+//    // setup Polymer options
+//    window.Polymer = {lazyRegister: true, dom: 'shadow'};
+//
+//    // load webcomponents polyfills
+//    (function() {
+//      if ('registerElement' in document
+//          && 'import' in document.createElement('link')
+//          && 'content' in document.createElement('template')) {
+//        // browser has web components
+//      } else {
+//        // polyfill web components
+//        var e = document.createElement('script');
+//        e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+//        document.head.appendChild(e);
+//      }
+//    })();
+//
+//  </script>
 
 <!--  <link rel="import" href="/src/tekvideo-dashboard.html"> -->
 
