@@ -52,7 +52,7 @@ grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'dk.sdu.tekvide
 grails.plugin.springsecurity.authority.className = 'dk.sdu.tekvideo.Role'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               access: ['permitAll']],
-	[pattern: '/app/**',               access: ['permitAll']],
+	[pattern: '/app/**',         access: ['permitAll']],
 	[pattern: '/error',          access: ['permitAll']],
 	[pattern: '/index',          access: ['permitAll']],
 	[pattern: '/index.gsp',      access: ['permitAll']],
