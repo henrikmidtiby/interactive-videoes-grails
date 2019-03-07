@@ -3,6 +3,7 @@
 <head>
     <title>Kursusadministration</title>
     <meta name="layout" content="main_fluid"/>
+    <asset:javascript src="cardstack.js" />
 </head>
 
 <body>
