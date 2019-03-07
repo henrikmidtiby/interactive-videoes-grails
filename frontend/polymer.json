@@ -2,6 +2,8 @@
   "entrypoint": "test-tve-status-indicator.html",
   "fragments": [
     "components/tve-group-renderer.js",
+    "components/tve-group-editor.js",
+    "components/tv-browser.js",
     "tests.html",
     "exercises.html",
     "test-temp.html",

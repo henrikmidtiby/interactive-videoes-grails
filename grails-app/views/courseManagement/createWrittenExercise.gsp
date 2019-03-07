@@ -5,9 +5,7 @@
 <head>
     <title>Ny opgave til ${subject.name}</title>
 
-    <g:render template="/polymer/includePolymer" />
-
-    <sdu:appResourceImport href="components/exercise-editor/tve-group-editor.html" />
+    <sdu:appJavascriptModuleImport href="components/tve-group-editor.js" />
     <style>
     .polymer {
         font-family: 'Roboto', 'Noto', sans-serif;
