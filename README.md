@@ -128,7 +128,7 @@ To run the development server, do the following:
 
 ```
 cd tekvideo
-grails run-app
+grails run-app -https
 ```
 
 # TekVideo - grails 2 version of the readme
