@@ -234,8 +234,6 @@ class TVBrowser extends PolymerElement {
   }
 
   _computeCurrentPage(_pages, page) {
-    console.log(_pages);
-    console.log(page);
     if (page < _pages.length && page >= 0) {
       return _pages[page];
     } else {
