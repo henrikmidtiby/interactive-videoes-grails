@@ -243,7 +243,10 @@ th, td {
   }
 
   backToMenu() {
-      this.fire("backToMenu");
+      var event = new CustomEvent("backToMenu", 
+                                  {bubbles: true, 
+                                   composed: true});
+      self.dispatchEvent(event);
   }
 
   markAsCorrect(ids) {

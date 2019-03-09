@@ -303,7 +303,10 @@ a.no-decoration {
       } else if (!this.streakToPass) {
           this._displayToast("Mangler opgavestreak");
       } else {
-          this.fire("save");
+          var event = new CustomEvent("save", 
+                                      {bubbles: true, 
+                                       composed: true}); 
+          self.dispatchEvent(event);
       }
   }
 

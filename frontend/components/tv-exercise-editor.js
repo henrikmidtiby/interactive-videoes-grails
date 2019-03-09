@@ -292,7 +292,10 @@ paper-tabs {
   }
 
   _save() {
-      this.fire("save");
+      var event = new CustomEvent("save", 
+                                  {bubbles: true, 
+                                   composed: true}); 
+      self.dispatchEvent(event);
   }
 
   update() {

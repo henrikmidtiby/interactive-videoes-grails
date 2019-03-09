@@ -274,10 +274,12 @@ class TVBrowser extends PolymerElement {
     e.stopPropagation();
 
     var anchor = getAncestor(e.detail.target, "a");
-    this.fire("link", {
-      original: e.detail,
-      link: anchor.getAttribute("href")
-    });
+    var event = new CustomEvent("display", 
+                                {bubbles: true, 
+                                 composed: true,
+				 original: e.detail, 
+				 link: anchor.getAttribute("href")}); 
+    self.dispatchEvent(event);
   }
 }
 

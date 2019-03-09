@@ -170,7 +170,11 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
   }
 
   onLink(e, i) {
-      this.fire("link", e);
+      var event = new CustomEvent("line", 
+                                  {link_info: e, 
+                                   bubbles: true, 
+                                   composed: true}); 
+      self.dispatchEvent(event);
   }
 }
 
