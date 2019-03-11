@@ -49,6 +49,7 @@
     "katex": "^0.10.1",
     "marked": "^0.6.1",
     "mathquill": "^0.10.1-a",
+    "underscore": "^1.9.1",
     "web-animations-js": "^2.3.1"
   },
   "resolutions": {
