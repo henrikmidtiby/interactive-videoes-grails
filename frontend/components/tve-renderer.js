@@ -250,7 +250,6 @@ paper-button {
                                      widgetResults: widgetResults}
                                   });
       self.dispatchEvent(event);
-			console.log(event);
   }
 
   beginSpinning(status) {
