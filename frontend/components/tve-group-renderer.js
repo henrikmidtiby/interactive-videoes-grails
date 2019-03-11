@@ -178,22 +178,24 @@ th, td {
     };
   }
 
+  act_on_grade_event(e) {
+    console.log("act_on_grade_event");
+    console.log(e);
+    console.log(this);
+    var data = e.detail;
+
+    if (data.passes) {
+      var exercise = this._assignmentOrder[this.currentExercise];
+      this.markAsCorrect([exercise.identifier]);
+      renderer.isInteractive = false;
+      this._selectedPage = 1;
+      this._countDownForNext(3);
+    }
+  }
+
   ready() {
       super.ready();
-      var self = this;
-      var renderer = this.$.renderer;
-
-      renderer.addEventListener("grade", function(e) {
-          var data = e.detail;
-
-          if (data.passes) {
-              var exercise = self._assignmentOrder[self.currentExercise];
-              self.markAsCorrect([exercise.identifier]);
-              renderer.isInteractive = false;
-              self._selectedPage = 1;
-              self._countDownForNext(3);
-          }
-      });
+      window.addEventListener("grade", this.act_on_grade_event.bind(this));
 
       if (this.exercisePool && this.exercisePool.length > 0) {
           this.displayNext();
