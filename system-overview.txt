@@ -62,3 +62,8 @@ I think it is an issue with the mathquill.css file and how it is loaded.
 
 1. Map how events are dispatched and collected in the frontend and between the frontend / backend.
 2. Ensure that the status of completed exercises are visualised in a proper way (https://localhost:8443/app/test-tve-group-renderer.html, show the list of exercise). This is properbly related to computed properties and the _computeCompletionIcon in tve-group-renderer.js
+3. Change names of events to be more descriptive.
+4. Look at markdown:renderHtml and issues with how scandinavian special characters are handled (they often look wrong on the course descriptions).
+5. When starting a video on the site, the following error is shown: "Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('https://tekvideo.sdu.dk')."
+6. Switch from paper-toolbar to app-layout, as paper-toolbar is deprecated.
+7. Ensure that it is possible to add new exercises in the course management (through the tve-group-editor element).
