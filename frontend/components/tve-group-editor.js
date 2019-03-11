@@ -1,5 +1,4 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
-import '@polymer/polymer/polymer-legacy.js';
 import '@polymer/iron-flex-layout/iron-flex-layout-classes.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-input/paper-textarea.js';
@@ -78,7 +77,6 @@ a.no-decoration {
         <paper-icon-button icon="communication:import-export"></paper-icon-button>
     </a>
     <paper-icon-button icon="save" on-click="save"></paper-icon-button>
-
 </paper-toolbar>
 <iron-pages selected="[[_pageData.page]]" attr-for-selected="id">
     <div id="home" class="content">
@@ -183,11 +181,23 @@ a.no-decoration {
       title: {
         type: String,
         value: "Ny opgave"
+      },
+      _route: {
+        type: String,
+        value: ""
+      },
+      _pageData: {
+        type: String,
+        value: "",
+        observer: '_observePage'
+      },
+      _pageId: {
+        type: String,
+        value: "",
+        observer: '_observePageData'
       }
     }
   }
-
-  // observers: ["_observePage(_pageData)", "_observePageData(_pageId)"]
 
   _observePage(pageData) {
       if (pageData.page !== "home" && pageData.page !== "edit" && 
