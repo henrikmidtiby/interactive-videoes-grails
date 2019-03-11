@@ -179,9 +179,6 @@ th, td {
   }
 
   act_on_grade_event(e) {
-    console.log("act_on_grade_event");
-    console.log(e);
-    console.log(this);
     var data = e.detail;
 
     if (data.passes) {
@@ -195,7 +192,7 @@ th, td {
 
   ready() {
       super.ready();
-      window.addEventListener("grade", this.act_on_grade_event.bind(this));
+      window.addEventListener("exercise-was-graded", this.act_on_grade_event.bind(this));
 
       if (this.exercisePool && this.exercisePool.length > 0) {
           this.displayNext();

@@ -242,7 +242,7 @@ paper-button {
       if (passes) this.setStatus(1);
       else this.setStatus(3);
 
-      var event = new CustomEvent("grade", 
+      var event = new CustomEvent("exercise-was-graded", 
                                   {bubbles: true, composed: true, 
                                    detail: { 
                                      identifier: this.identifier, 
@@ -250,6 +250,7 @@ paper-button {
                                      widgetResults: widgetResults}
                                   });
       self.dispatchEvent(event);
+			console.log(event);
   }
 
   beginSpinning(status) {
