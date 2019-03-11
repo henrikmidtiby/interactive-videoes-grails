@@ -244,9 +244,11 @@ paper-button {
 
       var event = new CustomEvent("grade", 
                                   {bubbles: true, composed: true, 
-                                   identifier: this.identifier, 
-                                   passes: passes, 
-                                   widgetResults: widgetResults});
+                                   detail: { 
+                                     identifier: this.identifier, 
+                                     passes: passes, 
+                                     widgetResults: widgetResults}
+                                  });
       self.dispatchEvent(event);
   }
 
