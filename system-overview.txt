@@ -61,4 +61,4 @@ I think it is an issue with the mathquill.css file and how it is loaded.
 # Things to do
 
 1. Map how events are dispatched and collected in the frontend and between the frontend / backend.
-2. Include mathquill using npm
+2. Ensure that the status of completed exercises are visualised in a proper way (https://localhost:8443/app/test-tve-group-renderer.html, show the list of exercise). This is properbly related to computed properties and the _computeCompletionIcon in tve-group-renderer.js
