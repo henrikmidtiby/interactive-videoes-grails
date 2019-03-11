@@ -1,0 +1,64 @@
+This document contains notes about the structure of the tekvideo.sdu.dk software.
+
+
+# General structure
+
+## Frontend
+Polymer 3.0 is used to define components for the frontend 
+* Interactive exercises (frontend/components/tve-renderer.js)
+* Exercise editor (frondend/components/tv-exercise-editor.js)
+* Navigation elements (frontend/components/tekvideo-exercise-card.js)
+The polymer elements is built using the command 
+cd frontend && polymer build
+and the generated files are available in the frontend/build/default directory.
+A simple webserver can be launched using the command
+cd frontend/build/default && python3 -m http.server
+There are currently no unittests on the frontend code, 
+but small tests of a subset of the defined elements are 
+available in the file frontend/tests.html
+
+## Backend
+Grails is used for the backend / serverside.
+
+To run the server with https support (which is required for 
+SDU Single Sign On to work), the following command should be used
+grails run-app -https
+
+
+
+# Files
+
+## grails-app/views/layouts/main_fluid.gsp
+Is the template used for normal pages on tekvideo.sdu.dk
+Most other templates and views are using this template.
+
+## grails-app/views/writtenExercise/view.gsp
+Template for pages that contain written exercises.
+
+
+
+# Web ressources
+
+## Grails templates
+https://gsp.grails.org/latest/guide/layouts.html
+
+
+## Mathquill
+The mathquill 
+
+http://docs.mathquill.com/en/latest/Getting_Started/
+https://www.npmjs.com/package/mathquill
+
+
+
+# Known issues
+
+The math input field for the interactive exercises, renders 
+badly on firefox but works fine on chrome.
+I think it is an issue with the mathquill.css file and how it is loaded.
+
+
+# Things to do
+
+1. Map how events are dispatched and collected in the frontend and between the frontend / backend.
+2. Include mathquill using npm
