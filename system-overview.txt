@@ -34,6 +34,12 @@ Most other templates and views are using this template.
 
 ## grails-app/views/writtenExercise/view.gsp
 Template for pages that contain written exercises.
+Listens to the "exercise-displayed" event emitted by tve-group-renderer.
+
+## grails-app/views/courseManagement/createWrittenExercise.gsp
+Template for creating new exercises.
+Listens to the "save-exercise-request" event emitted by tve-group-editor.
+
 
 
 
@@ -61,9 +67,9 @@ I think it is an issue with the mathquill.css file and how it is loaded.
 # Things to do
 
 1. Map how events are dispatched and collected in the frontend and between the frontend / backend.
-2. Ensure that the status of completed exercises are visualised in a proper way (https://localhost:8443/app/test-tve-group-renderer.html, show the list of exercise). This is properbly related to computed properties and the _computeCompletionIcon in tve-group-renderer.js
+2. Ensure that the status of completed exercises are visualised in a proper way (https://localhost:8443/app/test-tve-group-renderer.html, show the list of exercises). This is properbly related to computed properties and the _computeCompletionIcon in tve-group-renderer.js
 3. Change names of events to be more descriptive.
 4. Look at markdown:renderHtml and issues with how scandinavian special characters are handled (they often look wrong on the course descriptions).
 5. When starting a video on the site, the following error is shown: "Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('https://tekvideo.sdu.dk')."
 6. Switch from paper-toolbar to app-layout, as paper-toolbar is deprecated.
-7. Ensure that it is possible to add new exercises in the course management (through the tve-group-editor element).
+7. Ensure that it is possible to add new exercises in the course management (through the tve-group-editor element). It is possible to import new exercises through the json importer. The exercise editor does not work at the moment.
