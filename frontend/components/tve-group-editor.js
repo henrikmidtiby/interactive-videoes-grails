@@ -99,7 +99,7 @@ a.no-decoration {
     <a href="#/import" class="no-decoration">
         <paper-icon-button icon="communication:import-export"></paper-icon-button>
     </a>
-    <paper-icon-button icon="save" on-click="save"></paper-icon-button>
+    <paper-icon-button icon="save" on-click="save_exercise_group"></paper-icon-button>
 </app-toolbar>
 <iron-pages selected="[[_pageData.page]]" attr-for-selected="id">
     <div id="home" class="content">
@@ -328,7 +328,7 @@ a.no-decoration {
       toast.opened = true;
   }
 
-  save() {
+  save_exercise_group() {
       if (!this.description) {
           this._displayToast("Mangler opgavebeskrivelse");
       } else if (!this.name) {
