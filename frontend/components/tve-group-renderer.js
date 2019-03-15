@@ -195,7 +195,8 @@ th, td {
       window.addEventListener("exercise-was-graded", this.act_on_grade_event.bind(this));
 
       if (this.exercisePool && this.exercisePool.length > 0) {
-          this.displayNext();
+          // An exercise is already displayed at this point in time.
+          // this.displayNext();
       }
   }
 
