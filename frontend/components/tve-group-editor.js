@@ -29,7 +29,7 @@ class TVEGroupEditor extends PolymerElement {
 }
 
 .title {
-  margin-left: 56px;
+  margin-left: 72px;
   font-size: 20px;
   flex: 1;
 }
@@ -44,6 +44,11 @@ app-toolbar {
   background-color: var(--primary-color);
   padding-top: 8px;
   padding-bottom: 8px;
+}
+
+<!-- TODO: Fix issue with the placement of the buttons, which are too close to the rigth border. -->
+app-toolbar paper-icon-button {
+  margin-right: 10px;
 }
 
 paper-fab {
