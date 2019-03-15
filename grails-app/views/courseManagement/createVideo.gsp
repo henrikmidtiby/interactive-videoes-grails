@@ -349,6 +349,7 @@
 </g:content>
 
 <g:content key="layout-script">
+    <asset:javascript src="bootstrap.js"/>
     <asset:javascript src="video-creator.js"/>
     <script>
         var baseUrl = "${createLink(absolute:false, uri:'/')}";
