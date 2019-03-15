@@ -282,8 +282,8 @@ th, td {
       var exercise = this._assignmentOrder[exerciseIdx];
       var renderer = this.$.renderer;
       if (exercise) {
-          var event = new CustomEvent("display", 
-                                      {exercise: exercise, 
+          var event = new CustomEvent("exercise-displayed", 
+                                      {detail: {exercise: exercise}, 
                                        bubbles: true, 
                                        composed: true}); 
           self.dispatchEvent(event);

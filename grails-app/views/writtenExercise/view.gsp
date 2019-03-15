@@ -91,7 +91,7 @@
         }, true);
     });
 
-    renderer.addEventListener("display", function (e) {
+    window.addEventListener("exercise-displayed", function (e) {
         var identifier = parseInt(e.detail.exercise.identifier);
         events.emit({"kind": "VISIT_WRITTEN_EXERCISE", "subExercise": identifier}, true);
     });
