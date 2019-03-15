@@ -7,7 +7,7 @@
     <title>${exercise.name}</title>
 
     <sdu:appJavascriptModuleImport href="components/tve-group-renderer.js" />
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.js" integrity="sha384-ern5NCRqs6nJ/a4Ik0nB9hnKVH5HwV2XRUYdQl09OB/vvd1Lmmqbg1Mh+mYUclXx" crossorigin="anonymous"></script>
+    <script src="app/node_modules/katex/dist/katex.js"></script>
     <style>
     .polymer {
         font-family: 'Roboto', 'Noto', sans-serif;
