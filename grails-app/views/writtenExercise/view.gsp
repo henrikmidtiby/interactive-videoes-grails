@@ -83,7 +83,7 @@
     renderer.exercisePool = exercisePool;
     renderer.completed = ${completed};
 
-    renderer.addEventListener("grade", function (e) {
+    window.addEventListener("exercise-was-graded", function (e) {
         events.emit({
             "kind": "ANSWER_WRITTEN_EXERCISE",
             "subExercise": parseInt(e.detail.identifier),
@@ -96,7 +96,7 @@
         events.emit({"kind": "VISIT_WRITTEN_EXERCISE", "subExercise": identifier}, true);
     });
 
-    renderer.addEventListener("backToMenu", function () {
+    window.addEventListener("backToMenu", function () {
         document.location = "${sdu.createLinkToSubject(subject: exercise.subject)}";
     });
 
