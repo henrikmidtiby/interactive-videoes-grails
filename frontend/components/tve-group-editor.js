@@ -214,6 +214,10 @@ a.no-decoration {
         value: "",
         observer: '_observePage'
       },
+      _pageTail: {
+        type: String,
+        value: ""
+      },
       _pageId: {
         type: String,
         value: "",
@@ -222,9 +226,9 @@ a.no-decoration {
     }
   }
 
-  _observePage(pageData) {
-      if (pageData.page !== "home" && pageData.page !== "edit" && 
-              pageData.page !== "import") {
+  _observePage(_pageData) {
+      if (_pageData.page !== "home" && _pageData.page !== "edit" && 
+              _pageData.page !== "import") {
           document.location = "#/home";
       }
       this.exercises = JSON.parse(JSON.stringify(this.exercises));
