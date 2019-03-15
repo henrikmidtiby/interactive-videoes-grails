@@ -25,7 +25,25 @@ class TVEGroupEditor extends PolymerElement {
 
 <style>
 :host {
-    display: block;
+  display: block;
+}
+
+.title {
+  margin-left: 56px;
+  font-size: 20px;
+  flex: 1;
+}
+
+app-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 48px;
+  width: 100%;
+  color: white;
+  background-color: var(--primary-color);
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 paper-fab {
@@ -68,7 +86,7 @@ a.no-decoration {
     data="{{_pageId}}">
 </app-route>
 
-<paper-toolbar>
+<app-toolbar>
     <template is="dom-if" if="{{_showBackButton(_pageData)}}">
         <paper-icon-button icon="chevron-left" on-click="_goBack"></paper-icon-button>
     </template>
@@ -77,7 +95,7 @@ a.no-decoration {
         <paper-icon-button icon="communication:import-export"></paper-icon-button>
     </a>
     <paper-icon-button icon="save" on-click="save"></paper-icon-button>
-</paper-toolbar>
+</app-toolbar>
 <iron-pages selected="[[_pageData.page]]" attr-for-selected="id">
     <div id="home" class="content">
         <paper-input 
