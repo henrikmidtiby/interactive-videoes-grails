@@ -292,7 +292,7 @@ paper-tabs {
   }
 
   _save() {
-      var event = new CustomEvent("save", 
+      var event = new CustomEvent("save-exercise-request", 
                                   {bubbles: true, 
                                    composed: true}); 
       self.dispatchEvent(event);
