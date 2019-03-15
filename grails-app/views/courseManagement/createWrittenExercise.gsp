@@ -73,7 +73,7 @@
         editor.title = "Redigering af opgave ${exercise.name}";
     </g:if>
 
-    editor.addEventListener("save", function() {
+    window.addEventListener("save-exercise-request", function() {
         var data = {};
         // Prepare and validate data
         data.name = editor.name;

@@ -336,10 +336,11 @@ a.no-decoration {
       } else if (!this.streakToPass) {
           this._displayToast("Mangler opgavestreak");
       } else {
-          var event = new CustomEvent("save", 
+          var event = new CustomEvent("save-exercise-request", 
                                       {bubbles: true, 
                                        composed: true}); 
           self.dispatchEvent(event);
+          this._displayToast("Forespørgsel er sendt");
       }
   }
 
