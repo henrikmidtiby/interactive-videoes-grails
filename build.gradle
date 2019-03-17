@@ -108,7 +108,7 @@ task("buildFrontend").doLast {
     def outputDir = new File(project.buildDir, "assets")
     outputDir.mkdir()
 
-    def frontendBuildDir = new File(base, "build")
+    def frontendBuildDir = new File(base, "build/default")
     if (!frontendBuildDir.exists()) throw new IllegalStateException("Could not find result of frontend build. " +
             "Expected at: ${frontendBuildDir.absolutePath}")
 
