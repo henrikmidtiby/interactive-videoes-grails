@@ -69,3 +69,4 @@ The exercise editor does not work, however the import exercises from json works.
 4. Look at markdown:renderHtml and issues with how scandinavian special characters are handled (they often look wrong on the course descriptions).
 5. When starting a video on the site, the following error is shown: "Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.youtube.com') does not match the recipient window's origin ('https://tekvideo.sdu.dk')."
 7. Ensure that it is possible to add new exercises in the course management (through the tve-group-editor element). It is possible to import new exercises through the json importer. The exercise editor does not work at the moment.
+8. The matrix environment pmatrix is not showed as intended by Katex, eg. https://tekvideo.sdu.dk/t/henrikmidtiby/T-MAT1-2018/2018/1/blok02/3. According to https://katex.org/docs/support_table.html#p the pmatrix environment should be supported.
