@@ -5,8 +5,8 @@
 <head>
     <title>Ny opgave til ${subject.name}</title>
 
+    <sdu:appJavascriptModuleImport href="node_modules/katex/dist/katex.js" />
     <sdu:appJavascriptModuleImport href="components/tve-group-editor.js" />
-    <script src="../../app/node_modules/katex/dist/katex.js"></script>
     <style>
     .polymer {
         font-family: 'Roboto', 'Noto', sans-serif;

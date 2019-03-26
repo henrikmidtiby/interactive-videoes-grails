@@ -6,8 +6,8 @@
     <meta name="layout" content="main_fluid"/>
     <title>${exercise.name}</title>
 
+    <sdu:appJavascriptModuleImport href="node_modules/katex/dist/katex.js" />
     <sdu:appJavascriptModuleImport href="components/tve-group-renderer.js" />
-    <script src="/assets/node_modules/katex/dist/katex.js"></script>
     <style>
     .polymer {
         font-family: 'Roboto', 'Noto', sans-serif;
