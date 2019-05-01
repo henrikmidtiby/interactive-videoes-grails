@@ -30,9 +30,10 @@ up such a server.
 
 ## Online guides I have used for inspiration
 
- - How To Install Apache Tomcat 9 Server on Ubuntu 18.04 LTS & 16.04 LTS, [http://yallalabs.com/linux/how-to-install-apache-tomcat-9-server-on-ubuntu-18-04-lts-16-04-lts/]
- - How to server flask application swith gunicorn and nginx on Ubuntu 18.04, [https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-18-04]
+ - How To Install Apache Tomcat 9 Server on Ubuntu 18.04 LTS & 16.04 LTS [http://yallalabs.com/linux/how-to-install-apache-tomcat-9-server-on-ubuntu-18-04-lts-16-04-lts/]
+ - How to server flask application swith gunicorn and nginx on Ubuntu 18.04 [https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-18-04]
  - How to install PostgreSQL on a Ubuntu VPS Running NGinx [https://hostadvice.com/how-to/how-to-install-postgresql-on-nginx-web-servers/]
+ - Nginx + Apache tomcap configuration example [https://www.mkyong.com/nginx/nginx-apache-tomcat-configuration-example/]
 
 
 ## Various notes
@@ -113,3 +114,63 @@ $ sudo apt install nginx
 ```
 
 The nginx server is launched automatically and you should be able to see the site on the public address of the server.
+
+### Configure nginx
+
+Set the `server_name` to `tekvideo.tek.sdu.dk` in the file
+```
+$ sudo gvim /etc/nginx/sites-enabled/default
+```
+
+## Install tomcat
+
+
+### Create tomcat user
+
+[https://linuxize.com/post/how-to-install-tomcat-9-on-ubuntu-18-04/]
+
+```
+sudo mkdir /opt/tomcat
+sudo groupadd tomcat
+sudo useradd -s /bin/false -g tomcat -d /opt/tomcat tomcat
+wget http://www-eu.apache.org/dist/tomcat/tomcat-9/v9.0.19/bin/apache-tomcat-9.0.19.tar.gz -P /tmp
+sudo tar xf /tmp/apache-tomcat-9*.tar.gz -C /opt/tomcat
+sudo ln -s /opt/tomcat/apache-tomcat-9.0.19/ /opt/tomcat/latest
+sudo chown -RH tomcat: /opt/tomcat/latest
+sudo sh -c 'chmod +x /opt/tomcat/latest/bin/*.sh'
+sudo vi /etc/systemd/system/tomcat.service
+sudo systemctl daemon-reload
+sudo systemctl start tomcat
+sudo systemctl status tomcat
+sudo systemctl enable tomcat
+
+cd /opt/tomcat/latest
+sudo chown -R tomcat webapps/ work/ temp/ logs/
+```
+
+```
+$ sudo apt install tomcat9
+$ sudo apt install openjdk-8-jdk
+$ sudo update-alternatives --config java
+```
+
+
+Test the tomcat installation by using the text based browser lynx.
+``
+lynx tekvideo.tek.sdu.dk
+```
+
+
+
+## Set up tekvideo deployment directory
+
+
+```
+$ mkdir tekvideo_deployment
+$ cd tekvideo_deployment
+$ vi deploy
+```
+
+Note that the deploy script takes a while to run.
+Especially the buildFrontend takes several minutes.
+
