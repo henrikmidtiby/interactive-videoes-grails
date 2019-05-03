@@ -34,6 +34,7 @@ up such a server.
  - How to server flask application swith gunicorn and nginx on Ubuntu 18.04 [https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-18-04]
  - How to install PostgreSQL on a Ubuntu VPS Running NGinx [https://hostadvice.com/how-to/how-to-install-postgresql-on-nginx-web-servers/]
  - Nginx + Apache tomcap configuration example [https://www.mkyong.com/nginx/nginx-apache-tomcat-configuration-example/]
+ - How to install apache tomcat 9 on linux to deploy java webapps [https://www.thegeekstuff.com/2017/06/install-tomcat-linux/]
 
 
 ## Various notes
@@ -173,4 +174,170 @@ $ vi deploy
 
 Note that the deploy script takes a while to run.
 Especially the buildFrontend takes several minutes.
+
+
+
+## Experiments in a virtual server
+
+Installed Ubuntu 18.04.2 server in Virtual Box.
+Updated all installed packages.
+
+Set network in virtual box to bridged, this allows the virtual machine to get an ip from the same range as the host machin.
+
+Took a snapshot of the installation at this point.
+
+### Tomcat 9
+
+Install tomcat9 with openjdk 8 as java version.
+```
+sudo apt install openjdk-8-jdk
+sudo update-alternatives --config java
+sudo apt install tomcat9
+sudo apt install tomcat9-examples
+```
+
+Try to deploy a test example
+```
+cd /usr/share/tomcat9-examples/examples
+sudo jar cfM simple.war *
+cp simple.war /var/lib/tomcat9/webapps
+```
+
+From the host computer, I could now connect to 
+[http://192.168.123.34:8080/examples/] and see the tomcat examples in action.
+
+Took a snapshot of the installation at this point.
+
+
+### Nginx reverse proxy server
+
+```
+sudo apt install nginx
+```
+
+From the host computer, I could now connect to 
+[http://192.168.123.34] and see the nginx welcome screen.
+
+
+#### Connect to the tomcat server
+
+
+Edit the file `/etc/nginx/sites-available/example`
+and fill it with the following content.
+```
+sudo vi /etc/nginx/sites-available/example
+```
+
+Content
+```
+server {
+    listen 80;
+    listen [::]:80;
+    server_name  example.com www.example.com 192.168.123.34;
+
+    proxy_redirect           off;
+    proxy_set_header         X-Real-IP $remote_addr;
+    proxy_set_header         X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header         Host $http_host;
+
+    location / {
+            proxy_pass http://127.0.0.1:8080;
+    }
+}
+```
+
+From the host computer, I could now connect to 
+[http://192.168.123.34] and see the tomcat welcome screen.
+
+Took a snapshot of the installation at this point.
+
+
+### Grails
+
+
+```
+cd
+sudo apt install zip
+curl -s https://get.sdkman.io | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk install grails 3.2.9
+```
+
+
+### PostgreSQL
+
+```
+sudo apt install postgresql 
+```
+
+Test that postgreqsl works and create two databases.
+```
+sudo -i -u postgres
+psql
+```
+
+Create user and associated databases.
+```
+CREATE USER tekvideo PASSWORD 'devpassword';
+CREATE DATABASE "tekvideo-dev" OWNER tekvideo;
+CREATE DATABASE "tekvideo-test" OWNER tekvideo;
+```
+
+Terminate the postgresql client
+```
+\q
+```
+
+Populate the database with content, by importing data dump from the server (tekvideo.sdu.dk).
+
+```
+sudo -u postgres psql tekvideo-dev < 2018-09-21psqldump-tekvideo3
+```
+
+
+### Tekvideo deployment script
+
+Created a new ssh key for github and added it to github.
+```
+ssh-keygen -t rsa -b 4096 -C "henrikmidtiby@gmail.com"
+```
+
+Cloned the git repository recursively
+```
+git clone --recursive git@github.com:henrikmidtiby/tekvideo_deployment.git
+```
+
+Installed node versioning manager (nvm).
+```
+cd /home/henrik
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+```
+
+Logged out and in again, to be able to see the ´nvm´ command.
+
+```
+nvm install --lts
+```
+
+Building the frontend for tekvideo.sdu.dk
+```
+cd tekvideo_deployment/tekvideo.sdu.dk/frontend
+./build.sh
+```
+
+Ran the server in development mode.
+```
+cd tekvideo_deployment/tekvideo.sdu.dk
+grails -https -host=192.168.123.34 run-app
+```
+
+After accepting a warning about an insecure site, it was able to 
+view the site in both firefox and chrome on the address
+[192.168.123.34].
+
+I cannot log into the site using the SDU SSO system at the moment, 
+as the systems wants to connect to localhost and that somehow fails.
+
+
+
 
