@@ -259,7 +259,7 @@ Took a snapshot of the installation at this point.
 cd
 sudo apt install zip
 curl -s https://get.sdkman.io | bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
+source .sdkman/bin/sdkman-init.sh
 sdk install grails 3.2.9
 ```
 
@@ -276,12 +276,22 @@ sudo -i -u postgres
 psql
 ```
 
-Create user and associated databases.
+Create user and associated databases, this is used for the local development server.
 ```
 CREATE USER tekvideo PASSWORD 'devpassword';
 CREATE DATABASE "tekvideo-dev" OWNER tekvideo;
 CREATE DATABASE "tekvideo-test" OWNER tekvideo;
 ```
+
+For the production server, the following is used instead.
+```
+CREATE USER tekvideo PASSWORD 'secretpassword';
+CREATE DATABASE "tekvideo-3" OWNER tekvideo;
+```
+And the real value of the 'secretpassword' is stored in a 
+configuration file outside of the git repository
+(/home/dathr12/.grails/tekvideo-config.properties)
+
 
 Terminate the postgresql client
 ```
@@ -291,7 +301,10 @@ Terminate the postgresql client
 Populate the database with content, by importing data dump from the server (tekvideo.sdu.dk).
 
 ```
+# For the development server
 sudo -u postgres psql tekvideo-dev < 2018-09-21psqldump-tekvideo3
+# For the production server
+sudo -u postgres psql tekvideo-3 < ~/2018-09-21psqldump-tekvideo3
 ```
 
 
@@ -325,6 +338,8 @@ cd tekvideo_deployment/tekvideo.sdu.dk/frontend
 ./build.sh
 ```
 
+#### Dev mode (not attempted this time)
+
 Ran the server in development mode.
 ```
 cd tekvideo_deployment/tekvideo.sdu.dk
@@ -338,6 +353,113 @@ view the site in both firefox and chrome on the address
 I cannot log into the site using the SDU SSO system at the moment, 
 as the systems wants to connect to localhost and that somehow fails.
 
+
+#### Production
+
+
+Had to manually delete the ROOT and ROOT.war content of `/var/lib/tomcat9/webapps/`.
+
+```
+cd tekvideo_deployment
+./deploy
+```
+
+After accepting a warning about an insecure site, it was able to 
+view the site in both firefox and chrome on the address
+[192.168.123.34].
+
+I cannot log into the site using the SDU SSO system at the moment, 
+as the systems wants to connect to localhost and that somehow fails.
+
+
+### Nginx - ssl certificates in place
+
+Using this guide: [https://hostadvice.com/how-to/how-to-configure-nginx-to-use-self-signed-ssl-tls-certificate-on-ubuntu-18-04-vps-or-dedicated-server/].
+
+Generate certificate and key file.
+```
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/example.com.key -out /etc/ssl/certs/example.com.crt
+```
+
+Modify the nginx configuration file `/etc/nginx/sites-available/example`.
+```
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    ssl_certificate /etc/ssl/certs/example.com.crt;
+    ssl_certificate_key /etc/ssl/private/example.com.key;
+
+    server_name 192.168.123.34;
+
+    proxy_redirect           off;
+    proxy_set_header         X-Real-IP $remote_addr;
+    proxy_set_header         X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header         Host $http_host;
+
+    location / {
+            proxy_pass http://127.0.0.1:8080;
+    }
+}
+
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name 192.168.123.34;
+
+    proxy_redirect           off;
+    proxy_set_header         X-Real-IP $remote_addr;
+    proxy_set_header         X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header         Host $http_host;
+
+    # Only forward this without https to make the single signon work.
+    location /sso/index {
+            proxy_pass http://127.0.0.1:8080;
+    }
+
+    location / {
+	    return 302 https://$server_name$request_uri;
+    }
+}
+
+```
+
+Now requests to [http://192.168.123.34] are forwarded to [https://192.168.123.34].
+Chromium currently displays a warning about an insecure site, which is caused by my use 
+of self signed certificates.
+
+
+
+
+## Observation from old server
+
+something is targeting port 18080 on tekvideo.sdu.dk
+Information in the /etc/apache2/sites-enabled/000-default.conf
+
+This is redirected to 18443
+/opt/tomcat/conf/server.xml
+
+
+
+### Single Sign On
+
+
+
+#### Site in virtual box
+https://192.168.123.34/sso/index
+https://sso.sdu.dk//login?service=https%3A%2F%2F192.168.123.34%2Flogin%2Fcas
+https://192.168.123.34/login/cas?ticket=ST-143864-ckUPuWszgWMpGZsiNNijKyWUdbt6QjYQbuEzF9KqqKQkPxCCvu
+Displays an "internal server error (500)".
+
+#### Site on tekvideo.sdu.dk
+https://tekvideo.sdu.dk/sso/index
+https://sso.sdu.dk//login?service=https%3A%2F%2Ftekvideo.sdu.dk%2Flogin%2Fcas
+https://tekvideo.sdu.dk/login/cas?ticket=ST-145279-egRzxRvesyDJ2bGrvz67kv9dGy3UwvTh4FmwDDKkj6ASkR3EYU
+https://tekvideo.sdu.dk/sso/index
+https://tekvideo.sdu.dk/
+Site is now loaded and the user is logged in.
 
 
 
