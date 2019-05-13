@@ -292,6 +292,11 @@ And the real value of the 'secretpassword' is stored in a
 configuration file outside of the git repository
 (/home/dathr12/.grails/tekvideo-config.properties)
 
+A suitable password can be generated with the following command
+```
+python3 -c "import secrets; print(secrets.token_hex(32))"
+```
+
 
 Terminate the postgresql client
 ```
@@ -331,6 +336,19 @@ Logged out and in again, to be able to see the ´nvm´ command.
 ```
 nvm install --lts
 ```
+
+Create the file `/home/henrik/.grails/tekvideo-config.properties'.
+```
+dataSource.username=tekvideo
+#dataSource.password=secretpassword
+```
+
+Point to the grails settings file (which contains the password for the database).
+```
+grails.config.locations = ["/home/henrik/.grails/tekvideo-config.properties"]
+```
+
+
 
 Building the frontend for tekvideo.sdu.dk
 ```
@@ -462,4 +480,172 @@ https://tekvideo.sdu.dk/
 Site is now loaded and the user is logged in.
 
 
+
+
+# Second attempt at a virtual server
+
+Start: 18:30
+
+Install required packages
+```
+sudo apt install openjdk-8-jdk tomcat9 nginx postgresql zip mc
+```
+
+Time: 18:55 
+
+Installing the grails framework (local for the standard user)
+```
+cd /home/henrik
+curl -s https://get.sdkman.io | bash
+source .sdkman/bin/sdkman-init.sh
+sdk install grails 3.2.9
+```
+
+Time: 18:58
+
+Test that postgreqsl works and create two databases.
+```
+sudo -i -u postgres
+psql
+```
+
+For the production server, the following is used instead.
+```
+CREATE USER tekvideo PASSWORD 'secretpassword';
+CREATE DATABASE "tekvideo-3" OWNER tekvideo;
+```
+
+A suitable password can be generated with the following command
+```
+python3 -c "import secrets; print(secrets.token_hex(32))"
+```
+
+Move database dump to the server from my laptop
+```
+scp /home/henrik/Nextcloud/2018-09-21psqldump-tekvideo3 henrik@10.0.0.188:/home/henrik
+```
+
+Put data into the database from the database dump.
+```
+sudo -u postgres psql tekvideo-3 < ~/2018-09-21psqldump-tekvideo3
+```
+
+Time: 19:00
+
+Clone the tekvideo deployment git repository
+```
+git clone --recursive https://github.com/henrikmidtiby/tekvideo_deployment.git
+```
+
+Building the frontend for tekvideo.sdu.dk
+```
+cd tekvideo_deployment/tekvideo.sdu.dk/frontend
+./build.sh
+```
+
+Time: 19:08
+
+Create the file `/home/henrik/.grails/tekvideo-config.properties', with the content:
+```
+dataSource.username=tekvideo
+dataSource.password=secretpassword
+```
+
+Time: 19:15
+
+
+Delete the default site for tomcat
+```
+cd /var/lib/tomcat9/webapps
+sudo rm ROOT ROOT.war
+```
+
+
+```
+cd ~/tekvideo_deployment
+./deploy
+```
+
+Wait for a line in the logfile with the message
+```
+11-May-2019 17:55:17.203 INFO [Catalina-utility-2] 
+org.apache.catalina.startup.HostConfig.deployWAR 
+Deployment of web application archive 
+[/var/lib/tomcat9/webapps/ROOT.war] has finished in [49,630] ms
+```
+
+
+
+
+### Nginx - ssl certificates in place
+
+
+Generate certificate and key file.
+```
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/example.com.key -out /etc/ssl/certs/example.com.crt
+```
+
+Modify the nginx configuration file `/etc/nginx/sites-available/example`.
+```
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    ssl_certificate /etc/ssl/certs/example.com.crt;
+    ssl_certificate_key /etc/ssl/private/example.com.key;
+
+    server_name 192.168.123.34;
+
+    proxy_redirect           off;
+    proxy_set_header         X-Real-IP $remote_addr;
+    proxy_set_header         X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header         Host $http_host;
+
+    location / {
+            proxy_pass http://127.0.0.1:8080;
+    }
+}
+
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name 192.168.123.34;
+
+    proxy_redirect           off;
+    proxy_set_header         X-Real-IP $remote_addr;
+    proxy_set_header         X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header         Host $http_host;
+
+    # Only forward this without https to make the single signon work.
+    location /sso/index {
+            proxy_pass http://127.0.0.1:8080;
+    }
+
+    location / {
+	    return 302 https://$server_name$request_uri;
+    }
+}
+
+```
+
+Activate the site
+```
+cd /etc/nginx/sites-enabled/
+sudo rm default
+sudo ln -s ../sites-available/tekvideo
+sudo systemctl restart nginx.service
+```
+
+Now requests to [http://192.168.123.34] are forwarded to [https://192.168.123.34].
+Chromium currently displays a warning about an insecure site, which is caused by my use 
+of self signed certificates.
+
+
+
+
+#### Some issues where a log of errors were thrown during deployment of the war archieve
+
+[https://forum.forgerock.com/topic/unable-to-start-openam-application-after-deployment-on-apache-tomcat/]
 
