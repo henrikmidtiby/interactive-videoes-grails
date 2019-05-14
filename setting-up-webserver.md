@@ -513,6 +513,7 @@ For the production server, the following is used instead.
 ```
 CREATE USER tekvideo PASSWORD 'secretpassword';
 CREATE DATABASE "tekvideo-3" OWNER tekvideo;
+\q
 ```
 
 A suitable password can be generated with the following command
@@ -648,4 +649,290 @@ of self signed certificates.
 #### Some issues where a log of errors were thrown during deployment of the war archieve
 
 [https://forum.forgerock.com/topic/unable-to-start-openam-application-after-deployment-on-apache-tomcat/]
+
+
+
+
+
+
+# Installation on the server
+
+
+Install required packages
+```
+sudo apt install openjdk-8-jdk tomcat9 nginx postgresql zip mc
+```
+
+Installing the grails framework (local for the standard user)
+```
+cd /home/henrik
+curl -s https://get.sdkman.io | bash
+source .sdkman/bin/sdkman-init.sh
+sdk install grails 3.2.9
+```
+
+
+
+### Postgresql
+
+Test that postgreqsl works and create two databases.
+```
+sudo -i -u postgres
+psql
+```
+
+For the production server, the following is used instead.
+```
+CREATE USER tekvideo PASSWORD 'secretpassword';
+CREATE DATABASE "tekvideo-3" OWNER tekvideo;
+\q
+```
+
+A suitable password can be generated with the following command
+```
+python3 -c "import secrets; print(secrets.token_hex(32))"
+```
+
+Move database dump to the server from my laptop
+```
+scp /home/henrik/Nextcloud/2018-09-21psqldump-tekvideo3 henrik@10.0.0.188:/home/henrik
+```
+
+Put data into the database from the database dump.
+```
+sudo -u postgres psql tekvideo-3 < ~/2018-09-21psqldump-tekvideo3
+```
+
+
+
+### Tekvideo deployment script
+
+Created a new ssh key for github and added it to github.
+```
+ssh-keygen -t rsa -b 4096 -C "henrikmidtiby@gmail.com"
+```
+
+Cloned the git repository recursively
+```
+git clone --recursive git@github.com:henrikmidtiby/tekvideo_deployment.git
+```
+
+Installed node versioning manager (nvm).
+```
+cd /home/henrik
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+```
+
+Logged out and in again, to be able to see the ´nvm´ command.
+
+```
+nvm install --lts
+```
+
+Create the file `/home/henrik/.grails/tekvideo-config.properties'.
+```
+dataSource.username=tekvideo
+dataSource.password=secretpassword
+```
+
+Point to the grails settings file (which contains the password for the database).
+```
+grails.config.locations = ["/home/henrik/.grails/tekvideo-config.properties"]
+```
+
+Building the frontend for tekvideo.sdu.dk
+```
+cd tekvideo_deployment/tekvideo.sdu.dk/frontend
+./build.sh
+```
+
+
+Delete the default site for tomcat
+```
+cd /var/lib/tomcat9/webapps
+sudo rm -r ROOT 
+```
+
+
+```
+cd ~/tekvideo_deployment
+./deploy
+```
+This takes quite a while (~5 min) to complete, so consider to proceed with the ngnix setup.
+
+Wait for a line in the logfile with the message
+```
+11-May-2019 17:55:17.203 INFO [Catalina-utility-2] 
+org.apache.catalina.startup.HostConfig.deployWAR 
+Deployment of web application archive 
+[/var/lib/tomcat9/webapps/ROOT.war] has finished in [49,630] ms
+```
+
+Sometimes I see the following error, it is usually enough to run the 
+deploy script again and then it works.
+```
+13-May-2019 07:55:39.171 SEVERE [Catalina-utility-1] org.apache.catalina.startup.HostConfig.deployWAR Error deploying web application archive [/var/lib/tomcat9/webapps/ROOT.war]
+ java.lang.IllegalStateException: Error starting child
+	at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:716)
+```
+
+
+### Nginx - ssl certificates in place
+
+
+GGenerate certificate and key file.
+```
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/example.com.key -out /etc/ssl/certs/example.com.crt
+```
+Answer the posed questions with the following answers:
+```
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:DK
+State or Province Name (full name) [Some-State]:
+Locality Name (eg, city) []:Odense
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:SDU
+Organizational Unit Name (eg, section) []:
+Common Name (e.g. server FQDN or YOUR name) []:Henrik Skov Midtiby
+Email Address []:hemi@mmmi.sdu.dk
+```
+
+
+Modify the nginx configuration file.
+```
+sudo vi /etc/nginx/sites-available/tekvideo
+```
+Add the following to the file.
+```
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    ssl_certificate /etc/ssl/certs/example.com.crt;
+    ssl_certificate_key /etc/ssl/private/example.com.key;
+
+    server_name tekvideo.tek.sdu.dk;
+
+    proxy_redirect           off;
+    proxy_set_header         X-Real-IP $remote_addr;
+    proxy_set_header         X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header         Host $http_host;
+
+    location / {
+            proxy_pass http://127.0.0.1:8080;
+    }
+}
+
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name tekvideo.tek.sdu.dk;
+
+    proxy_redirect           off;
+    proxy_set_header         X-Real-IP $remote_addr;
+    proxy_set_header         X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header         Host $http_host;
+
+    # Only forward this without https to make the single signon work.
+    location /sso/index {
+            proxy_pass http://127.0.0.1:8080;
+    }
+
+    location / {
+	    return 302 https://$server_name$request_uri;
+    }
+}
+
+```
+
+Activate the site
+```
+cd /etc/nginx/sites-enabled/
+sudo rm default
+sudo ln -s ../sites-available/tekvideo
+sudo systemctl restart nginx.service
+```
+
+Now requests to [http://tekvideo.tek.sdu.dk] are forwarded to [https://tekvideo.tek.sdu.dk].
+Chromium currently displays a warning about an insecure site, which is caused by my use 
+of self signed certificates.
+
+
+### How to make a dump of the postgresql database
+
+Dumping the database to a file.
+```
+sudo -u postgres pg_dump tekvideo-3 > 2019-05-13tekvideo.pqsldump.txt
+```
+
+Halt the tomcat server
+```
+sudo service tomcat9 stop
+```
+
+Deleting the dabase and recreating it again without any data in it.
+```
+sudo -i -u postgres
+DROP DATABASE "tekvideo-3";
+CREATE DATABASE "tekvideo-3" OWNER tekvideo;
+```
+
+Fill data into the database again
+```
+sudo -u postgres psql tekvideo-3 < 2019-05-13tekvideo.pqsldump.txt
+```
+
+Start the tomcat server
+```
+sudo service tomcat9 start
+```
+
+
+
+### How to get a proper ssl certificate
+
+
+
+Generate certificate and key file.
+```
+sudo openssl req -new -newkey rsa:2048 -nodes -keyout tekvideo.sdu.dk.key -out tekvideo.sdu.dk.csr
+```
+Answer the posed questions with the following answers:
+```
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:DK
+State or Province Name (full name) [Some-State]:
+Locality Name (eg, city) []:Odense
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:SDU
+Organizational Unit Name (eg, section) []:
+Common Name (e.g. server FQDN or YOUR name) []:Henrik Skov Midtiby
+Email Address []:hemi@mmmi.sdu.dk
+```
+
+Send the files `tekvideo.sdu.dk.key` and `tekvideo.sdu.dk.csr` to Thomas Iversen.
+Then he will sign them and return a signed key `star_sdu_dk.cer`.
+To convert the `cer` file to the `crt` format, use the following command
+```
+openssl pkcs7 -text -in star_sdu_dk.cer -print_certs -outform PEM -out star_sdu_dk.crt
+```
+
+Place the files `star_sdu_dk.crt` and `tekvideo.sdu.dk.key` in the directory `/etx/nginx/ssl` 
+and update the references to the ssl certificates in `/etc/nginx/sites-available/tekvideo`.
+
+
 
