@@ -5,16 +5,13 @@ To test the system, do the following
 1. enter the frontend directory
 cd frontend
 
-2. launch a web server
-python3 -m http.server
+2. launch the development server
+polymer serve
 
-3. execute 'polymer build'
-polymer build
+3. open the link in the browser
+http://127.0.0.1:8081/components/tekvideo-frontend/tests.html
 
-4. open the file exercises.html in the browser
-http://0.0.0.0:8000/exercises.html
-
-5. after editing files, rerun 'polymer build'
+5. edit files and check whether it works in the browser.
 
 
 
