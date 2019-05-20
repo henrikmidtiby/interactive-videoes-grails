@@ -40,6 +40,8 @@ Listens to the "exercise-displayed" event emitted by tve-group-renderer.
 Template for creating new exercises.
 Listens to the "save-exercise-request" event emitted by tve-group-editor.
 
+## grails-app/service/dk/sdu/tekvideo/ErrorReportingService.gsp
+Sends emails through gmail to the maintainers about issues with the site.
 
 
 
