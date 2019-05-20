@@ -252,6 +252,8 @@ class TVBrowser extends PolymerElement {
         return true;
       } else if (item.description.toLowerCase().indexOf(normalizedQuery) !== -1) {
         return true;
+      } else if (item.url.toLowerCase().indexOf(normalizedQuery) !== -1) {
+        return true;
       } else {
         return false;
       }
