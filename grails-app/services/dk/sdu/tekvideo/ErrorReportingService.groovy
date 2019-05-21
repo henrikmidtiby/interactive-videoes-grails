@@ -2,12 +2,14 @@ package dk.sdu.tekvideo
 
 import grails.util.Environment
 import org.springframework.http.HttpStatus
+import grails.core.GrailsApplication
 
 import static dk.sdu.tekvideo.ServiceResult.*
 
 class ErrorReportingService {
     def mailService
     def springSecurityService
+    GrailsApplication grailsApplication
 
     ServiceResult<Void> report(ErrorReportCommand command) {
         if (!command.validate()) {
@@ -36,10 +38,14 @@ Actual:
 ${command.actual}
         """.trim()
 
-
-
         if (Environment.current == Environment.DEVELOPMENT) {
             log.info("Subject: ${subjectText}\nBody: ${bodyText}")
+            mailService.sendMail {
+                async true
+                to grailsApplication.config.maintainers.split(",")
+                subject subjectText
+                body bodyText
+            }
         } else {
             mailService.sendMail {
                 async true
