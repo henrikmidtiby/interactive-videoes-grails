@@ -1,4 +1,5 @@
-grails.config.locations = ["file:${System.getProperty("user.home")}/.grails/tekvideo-config.properties"]
+// grails.config.locations = ["file:${System.getProperty("user.home")}/.grails/tekvideo-config.properties"]
+grails.config.locations = ["file:/home/hemi/.grails/tekvideo-config.properties"]
 
 grails {
     mail {
@@ -9,7 +10,8 @@ grails {
                  "mail.smtp.socketFactory.port":"465",
                  "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
                  "mail.smtp.ssl.enable": "true",
-                 "mail.smtp.socketFactory.fallback":"false"]
+                 "mail.smtp.socketFactory.fallback":"false",
+                 "mail.from":"sdu.tekvideo@gmail.com"]
     }
 }
 
@@ -82,7 +84,9 @@ grails.plugin.springsecurity.cas.loginUri = '/login'
 //grails.plugin.springsecurity.cas.serverUrlPrefix = 'https://sso.sdu.dk/'
 //grails.plugin.springsecurity.cas.casServerUrlPrefix = 'https://sso.sdu.dk/'
 //grails.plugin.springsecurity.cas.proxyReceptorUrl = '/secure/receptor'
-grails.plugin.springsecurity.cas.serviceUrl = "https://localhost:8443/login/cas"
+//grails.plugin.springsecurity.cas.serviceUrl = "https://localhost:8443/login/cas"
+grails.plugin.springsecurity.cas.serviceUrl = "https://tekvideo.tek.sdu.dk/login/cas"
 grails.plugin.springsecurity.cas.serverUrlPrefix = 'https://sso.sdu.dk/'
-grails.plugin.springsecurity.cas.proxyCallbackUrl = "https://localhost:8443/secure/receptor"
+//grails.plugin.springsecurity.cas.proxyCallbackUrl = "https://localhost:8443/secure/receptor"
+grails.plugin.springsecurity.cas.proxyCallbackUrl = "https://tekvideo.tek.sdu.dk/secure/receptor"
 grails.plugin.springsecurity.cas.proxyReceptorUrl = '/secure/receptor'
