@@ -85,7 +85,7 @@ scp /home/henrik/Nextcloud/2018-09-21psqldump-tekvideo3 henrik@10.0.0.188:/home/
 
 Put data into the database from the database dump.
 ```
-sudo -u postgres psql tekvideo-3 < ~/2018-09-21psqldump-tekvideo3
+sudo -u postgres psql tekvideo-dev < ~/2018-09-21psqldump-tekvideo3
 ```
 
 
@@ -95,6 +95,9 @@ sudo -u postgres psql tekvideo-3 < ~/2018-09-21psqldump-tekvideo3
 ```
 grails run-app -https
 ```
+
+It is now possible to access the development server on the address
+https://localhost:8443
 
 
 ### Ensure that the right java version is used
