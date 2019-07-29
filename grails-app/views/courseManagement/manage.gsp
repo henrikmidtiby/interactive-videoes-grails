@@ -103,9 +103,9 @@
                 </div>
 
 <div>
-<form action="/upload-target" id="myAwesomeDropzone" class="dropzone"></form>
+<form action="/upload-target" id="myAwesomeDropzone${subject.id}" class="dropzone"></form>
 <script>
-Dropzone.options.myAwesomeDropzone = {
+Dropzone.options.myAwesomeDropzone${subject.id} = {
   autoProcessQueue: false, 
   init: function() {
     this.on("addedfile", 
@@ -144,21 +144,6 @@ Dropzone.options.myAwesomeDropzone = {
             });
         } else {
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
