@@ -24,7 +24,9 @@
   "extraDependencies": [
     "node_modules/@webcomponents/webcomponentsjs/*.js",
     "!node_modules/@webcomponents/webcomponentsjs/gulpfile.js",
-    "node_modules/@webcomponents/webcomponentsjs/bundles/*.js"
+    "node_modules/@webcomponents/webcomponentsjs/bundles/*.js",
+    "node_modules/dropzone/dist/dropzone.js",
+    "node_modules/dropzone/dist/dropzone.css"
   ],
    "lint": {
     "rules": ["polymer-2"]

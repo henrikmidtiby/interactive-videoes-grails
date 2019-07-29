@@ -4,6 +4,8 @@
     <title>Administrering af ${course.fullName} (${course.name})</title>
     <meta name="layout" content="main_fluid"/>
     <asset:javascript src="list.js"/>
+    <sdu:appResourceJs href="node_modules/dropzone/dist/dropzone.js" />
+    <sdu:appResourceCss href="node_modules/dropzone/dist/dropzone.css" />
     <sdu:requireAjaxAssets/>
 </head>
 
@@ -99,6 +101,76 @@
                     </twbs:row>
                     <hr>
                 </div>
+
+<div>
+<form action="/upload-target" id="myAwesomeDropzone" class="dropzone"></form>
+<script>
+Dropzone.options.myAwesomeDropzone = {
+  autoProcessQueue: false, 
+  init: function() {
+    this.on("addedfile", 
+      function(file) { 
+        var reader = new FileReader();
+        reader.addEventListener("loadend", 
+          function(event) { 
+            console.log(event.target.result);
+            var parsed_file = JSON.parse(event.target.result);
+
+        var data = {};
+        // Prepare and validate data
+        data.name = parsed_file.name;
+        data.description = parsed_file.description;
+        data.streakToPass = parsed_file.streakToPass;
+        data.thumbnailUrl = parsed_file.thumbnailUrl;
+        data.exercises = parsed_file.exercises.map(function(e) {
+            var identifier = e.identifier;
+            delete e.identifier;
+            var exercise = JSON.stringify(e);
+            return { identifier: identifier, exercise: exercise };
+        });
+        data.subject = 1429;
+        data.subject = "${subject.id}";
+        data.isEditing = false;
+
+        if (data.name) {
+            // Send data
+            Util.postJson("${createLink(action: "postWrittenExercise")}", data, {
+                success: function () {
+                    alert("success");
+                },
+                error: function () {
+                    alert("Failure");
+                }
+            });
+        } else {
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          });
+        reader.readAsText(file);
+      });
+  }
+};
+</script>
+</div>
+
+
             </g:each>
         </div>
     </g:else>
