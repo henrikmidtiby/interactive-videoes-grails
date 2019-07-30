@@ -7,6 +7,16 @@
     <sdu:appResourceJs href="node_modules/dropzone/dist/dropzone.js" />
     <sdu:appResourceCss href="node_modules/dropzone/dist/dropzone.css" />
     <sdu:requireAjaxAssets/>
+    <style>
+     
+    .dropzone {
+      min-height: 0px;
+      padding: 5px, 5px;
+    } 
+    .dropzone .dz-message {
+      margin: 0em;
+    }
+    </style>
 </head>
 
 <body>
@@ -99,63 +109,58 @@
                             <markdown:renderHtml text="${sdu.abbreviate([:], { subject.description })}"/>
                         </twbs:column>
                     </twbs:row>
-                    <hr>
                 </div>
 
-<div>
-<form action="/upload-target" id="myAwesomeDropzone${subject.id}" class="dropzone"></form>
-<script>
-Dropzone.options.myAwesomeDropzone${subject.id} = {
-  autoProcessQueue: false, 
-  init: function() {
-    this.on("addedfile", 
-      function(file) { 
-        var reader = new FileReader();
-        reader.addEventListener("loadend", 
-          function(event) { 
-            console.log(event.target.result);
-            var parsed_file = JSON.parse(event.target.result);
+                <div>
+                <form action="/upload-target" id="myAwesomeDropzone${subject.id}" class="dropzone">
+                  <div class="dz-message">Drop .json files here to upload exercises.</div>
+                </form>
+                <script>
+                Dropzone.options.myAwesomeDropzone${subject.id} = {
+                  autoProcessQueue: false, 
+                  init: function() {
+                    this.on("addedfile", 
+                      function(file) { 
+                        var reader = new FileReader();
+                        reader.addEventListener("loadend", 
+                          function(event) { 
+                            var parsed_file = JSON.parse(event.target.result);
 
-        var data = {};
-        // Prepare and validate data
-        data.name = parsed_file.name;
-        data.description = parsed_file.description;
-        data.streakToPass = parsed_file.streakToPass;
-        data.thumbnailUrl = parsed_file.thumbnailUrl;
-        data.exercises = parsed_file.exercises.map(function(e) {
-            var identifier = e.identifier;
-            delete e.identifier;
-            var exercise = JSON.stringify(e);
-            return { identifier: identifier, exercise: exercise };
-        });
-        data.subject = 1429;
-        data.subject = "${subject.id}";
-        data.isEditing = false;
-
-        if (data.name) {
-            // Send data
-            Util.postJson("${createLink(action: "postWrittenExercise")}", data, {
-                success: function () {
-                    alert("success");
-                },
-                error: function () {
-                    alert("Failure");
-                }
-            });
-        } else {
-        }
-
-
-
-          });
-        reader.readAsText(file);
-      });
-  }
-};
-</script>
-</div>
-
-
+                            var data = {};
+                            // Prepare and validate data
+                            data.name = parsed_file.name;
+                            data.description = parsed_file.description;
+                            data.streakToPass = parsed_file.streakToPass;
+                            data.thumbnailUrl = parsed_file.thumbnailUrl;
+                            data.exercises = parsed_file.exercises.map(function(e) {
+                                var identifier = e.identifier;
+                                delete e.identifier;
+                                var exercise = JSON.stringify(e);
+                                return { identifier: identifier, exercise: exercise };
+                            });
+                            data.subject = "${subject.id}";
+                            data.isEditing = false;
+                    
+                            if (data.name) {
+                                // Send data
+                                Util.postJson("${createLink(action: "postWrittenExercise")}", data, {
+                                    success: function () {
+                                        alert("success");
+                                    },
+                                    error: function () {
+                                        alert("Failure");
+                                    }
+                                });
+                            } else {
+                            }
+                          });
+                        reader.readAsText(file);
+                      });
+                  }
+                };
+                </script>
+                </div>
+                <hr>
             </g:each>
         </div>
     </g:else>
