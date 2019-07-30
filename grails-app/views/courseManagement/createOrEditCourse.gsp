@@ -26,7 +26,7 @@
                 <input type="hidden" name="domain.id" value="${command?.domain?.id}" />
             </g:if>
 
-            <twbs:input name="domain.name" bean="${command?.domain}" labelText="Fag kode" />
+            <twbs:input name="domain.name" bean="${command?.domain}" labelText="Fag kode (til url)" />
             <twbs:input name="domain.fullName" bean="${command?.domain}" labelText="Navn" />
             <twbs:textArea name="domain.description" bean="${command?.domain}" labelText="Beskrivelse" rows="10" />
             <twbs:input name="domain.year" bean="${command?.domain}" labelText="Semester (År)">
