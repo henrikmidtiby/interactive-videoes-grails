@@ -75,6 +75,11 @@
 </g:content>
 
 <g:content key="layout-script">
+    <div id="video_information">
+      <div id="video_id">${raw(video.youtubeId)}</div>
+      <div id="is_video_from_youtube">${video.videoType}</div>
+      <g:if test="${video.timelineJson}"><div id="video_timeline">${raw(video.timelineJson)}</div></g:if>
+    </div>
     <asset:javascript src="interactive_app.js"/>
     <script type="text/javascript">
         $(document).ready(function () {
