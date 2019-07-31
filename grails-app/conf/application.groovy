@@ -26,6 +26,8 @@ environments {
 			username = "tekvideo"
 			password = "devpassword"
 		}
+                grails.plugin.springsecurity.cas.serviceUrl = "https://localhost:8443/login/cas"
+                grails.plugin.springsecurity.cas.proxyCallbackUrl = "https://localhost:8443/secure/receptor"
 	}
 	test {
 		dataSource {
@@ -45,6 +47,8 @@ environments {
 			dialect = "org.hibernate.dialect.PostgreSQLDialect"
 			url = "jdbc:postgresql://localhost:5432/tekvideo-3"
 		}
+                grails.plugin.springsecurity.cas.serviceUrl = "https://tekvideo.sdu.dk/login/cas"
+                grails.plugin.springsecurity.cas.proxyCallbackUrl = "https://tekvideo.sdu.dk/secure/receptor"
 	}
 }
 
@@ -84,9 +88,5 @@ grails.plugin.springsecurity.cas.loginUri = '/login'
 //grails.plugin.springsecurity.cas.serverUrlPrefix = 'https://sso.sdu.dk/'
 //grails.plugin.springsecurity.cas.casServerUrlPrefix = 'https://sso.sdu.dk/'
 //grails.plugin.springsecurity.cas.proxyReceptorUrl = '/secure/receptor'
-//grails.plugin.springsecurity.cas.serviceUrl = "https://localhost:8443/login/cas"
-grails.plugin.springsecurity.cas.serviceUrl = "https://tekvideo.sdu.dk/login/cas"
 grails.plugin.springsecurity.cas.serverUrlPrefix = 'https://sso.sdu.dk/'
-//grails.plugin.springsecurity.cas.proxyCallbackUrl = "https://localhost:8443/secure/receptor"
-grails.plugin.springsecurity.cas.proxyCallbackUrl = "https://tekvideo.sdu.dk/secure/receptor"
 grails.plugin.springsecurity.cas.proxyReceptorUrl = '/secure/receptor'
