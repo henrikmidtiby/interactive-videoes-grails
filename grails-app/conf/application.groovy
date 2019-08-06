@@ -1,4 +1,5 @@
-grails.config.locations = ["file:${System.getProperty("user.home")}/.grails/tekvideo-config.properties"]
+// grails.config.locations = ["file:${System.getProperty("user.home")}/.grails/tekvideo-config.properties"]
+grails.config.locations = ["file:/home/hemi/.grails/tekvideo-config.properties"]
 
 grails {
     mail {
