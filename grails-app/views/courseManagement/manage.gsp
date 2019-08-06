@@ -7,6 +7,38 @@
     <sdu:appResourceJs href="node_modules/dropzone/dist/dropzone.js" />
     <sdu:appResourceCss href="node_modules/dropzone/dist/dropzone.css" />
     <sdu:requireAjaxAssets/>
+    <script>
+    function upload_exercises_from_parsed_file(parsed_file, subject_id)
+    {
+      var data = {};
+      // Prepare and validate data
+      data.name = parsed_file.name;
+      data.description = parsed_file.description;
+      data.streakToPass = parsed_file.streakToPass;
+      data.thumbnailUrl = parsed_file.thumbnailUrl;
+      data.exercises = parsed_file.exercises.map(function(e) {
+  	var identifier = e.identifier;
+  	delete e.identifier;
+  	var exercise = JSON.stringify(e);
+  	return { identifier: identifier, exercise: exercise };
+      });
+      data.subject = subject_id;
+      data.isEditing = false;
+  
+      if (data.name) {
+  	// Send data
+  	Util.postJson("${createLink(action: "postWrittenExercise")}", data, {
+  	    success: function () {
+  		alert("success");
+  	    },
+  	    error: function () {
+  		alert("Failure");
+  	    }
+  	});
+      } else {
+      }
+    }
+    </script>
     <style>
      
     .dropzone {
@@ -124,34 +156,17 @@
                         var reader = new FileReader();
                         reader.addEventListener("loadend", 
                           function(event) { 
-                            var parsed_file = JSON.parse(event.target.result);
-
-                            var data = {};
-                            // Prepare and validate data
-                            data.name = parsed_file.name;
-                            data.description = parsed_file.description;
-                            data.streakToPass = parsed_file.streakToPass;
-                            data.thumbnailUrl = parsed_file.thumbnailUrl;
-                            data.exercises = parsed_file.exercises.map(function(e) {
-                                var identifier = e.identifier;
-                                delete e.identifier;
-                                var exercise = JSON.stringify(e);
-                                return { identifier: identifier, exercise: exercise };
-                            });
-                            data.subject = "${subject.id}";
-                            data.isEditing = false;
-                    
-                            if (data.name) {
-                                // Send data
-                                Util.postJson("${createLink(action: "postWrittenExercise")}", data, {
-                                    success: function () {
-                                        alert("success");
-                                    },
-                                    error: function () {
-                                        alert("Failure");
-                                    }
-                                });
+                            if(RegExp('documentclass{article}').test(event.target.result)) {
+                              // Forward document to the conversion script.
+                              $SCRIPT_ROOT = 'https://tekvideo.sdu.dk/convert';
+                              $.post($SCRIPT_ROOT + '/_convert_exercises', {
+                                file_contents: event.target.result
+                              }, function(data) {
+                                upload_exercises_from_parsed_file(JSON.parse(data.result), "${subject.id}");
+                              });
                             } else {
+                              var parsed_file = JSON.parse(event.target.result);
+                              upload_exercises_from_parsed_file(parsed_file, "${subject.id}");
                             }
                           });
                         reader.readAsText(file);
