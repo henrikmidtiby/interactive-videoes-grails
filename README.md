@@ -110,3 +110,68 @@ sudo apt install openjdk-8-jdk
 sudo update-alternatives --config java
 ```
 
+
+## Different notes
+
+### How to make a dump of the postgresql database
+
+```
+sudo -i -u postgres
+pg_dump tekvideo-dev > 2019-08-26tekvideo_dev_dump.txt
+```
+
+# How to restore a dump
+
+Connect to the database using the psql client.
+```
+sudo -i -u postgres
+psql
+```
+
+Inside the psql command line, run the following commands.
+```
+\l
+DROP DATABASE "tekvideo-dev";
+CREATE DATABASE "tekvideo-dev" OWNER tekvideo;
+\q
+```
+
+Return to the normal user, and issue the command
+```
+sudo -u postgres psql tekvideo-dev < 2019-08-26tekvideo-3-server-dump.txt
+```
+
+
+
+### Running manual queries on the postgresql database
+
+
+Connect to the database using the psql client.
+```
+sudo -i -u postgres
+psql
+```
+
+Inside the psql command line, run the following commands.
+```
+\c "tekvideo-dev"
+SELECT * from written_exercise limit 2;
+```
+
+### Set state of the hibernate_sequence
+
+Get the next value from the hibernate_sequence
+and then set the next value to a fixed value.
+
+```
+SELECT nextval('hibernate_sequence');
+SELECT setval('hibernate_sequence', 80000);
+```
+
+
+### Insert logging code in the grails application
+
+```
+log.error("Error message")
+log.error(object.dump())
+```
