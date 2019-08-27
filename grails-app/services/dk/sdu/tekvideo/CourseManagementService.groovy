@@ -778,6 +778,7 @@ class CourseManagementService {
         def newExercise = new WrittenExerciseGroup([
                 name       : exercise.name,
                 description: exercise.description,
+                streakToPass: exercise.streakToPass, 
         ]).save(flush: true)
         SubjectExercise.create(subject, newExercise, [save: true])
 
