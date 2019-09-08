@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.js" integrity="sha384-ern5NCRqs6nJ/a4Ik0nB9hnKVH5HwV2XRUYdQl09OB/vvd1Lmmqbg1Mh+mYUclXx" crossorigin="anonymous"></script>
+  <script type="module" src="./components/tve-renderer.js"></script>
+</head>
+<body>
+
+<tve-renderer id="renderer" content=""></tve-renderer>
+
+<script type="module">
+var exercise = 
+{
+  "name": "Matrix test 2",
+  "document": "\nSkriv en vektor med længderne 1/2 og 1/3 ind herunder.\n\n[[ref answermatrix1]]\n\n\n\n \n\n[[ref hint1]] ",
+  "widgets": {
+    "hint1": {
+      "type": "hint",
+      "properties": {
+        "content": "Test"
+      },
+      "name": "hint1"
+    },
+    "answermatrix1": {
+      "type": "matrix",
+      "properties": {
+        "answer": [
+            ["1/2"],
+            ["1/3"]],
+        "height": 2,
+        "width": 1
+      },
+      "name": "answermatrix1"
+    }
+  }
+};
+
+var renderer = document.getElementById("renderer");
+renderer.isInteractive = true;
+renderer.content = exercise.document;
+renderer.widgets = exercise.widgets;
+renderer.identifier = 123;
+</script>
+</body>
