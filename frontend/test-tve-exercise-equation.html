@@ -16,10 +16,33 @@ Pythagean theorem:
 <tv-exercise-equation content="c = a^2 + 2 \cdot b"></tv-exercise-equation>
 
 <br>
+An expression with integration:
+<tv-exercise-equation content="\int_0^1 x^2 dx"></tv-exercise-equation>
+
+<br>
 Pythagean theorem:
 <tv-exercise-equation content="\begin{pmatrix}1 & 2\\ 3 & 4\end{pmatrix}"></tv-exercise-equation>
 <tv-exercise-equation content="\left(\begin{array}1 & 2\\ 3 & 4\end{array}\right)"></tv-exercise-equation>
 
+
+
+
+Comparison with Katex
+
+
+<span id="math_display"></span>
+
+<script>
+setTimeout(render, 1000);
+
+function render() {
+element = document.getElementById('math_display');
+katex.render("c = \\pm\\sqrt{a^2 + b^2} + \\int_0^1 x^2 dx", element, {
+  "displayMode": true, 
+  throwOnError: false
+});
+}
+</script>
 
 </body>
 </html>
