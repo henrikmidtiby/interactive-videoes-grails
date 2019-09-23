@@ -7,16 +7,23 @@
 </head>
 <body>
 
-<span id="math"></span>
+<span id="math_inline"></span>
+<span id="math_display"></span>
 
 <p onclick="render()">Hejsa</p>
 
 <script>
 render = function() {
 console.log('test');
-element = document.getElementById('math');
-katex.render("c = \\pm\\sqrt{a^2 + b^2}", element, {
-    throwOnError: false
+element = document.getElementById('math_inline');
+katex.render("c = \\pm\\sqrt{a^2 + b^2} + \\int_0^1 x^2 dx", element, {
+  throwOnError: false
+});
+  
+element = document.getElementById('math_display');
+katex.render("c = \\pm\\sqrt{a^2 + b^2} + \\int_0^1 x^2 dx", element, {
+  "displayMode": true, 
+  throwOnError: false
 });
 }
 </script>
