@@ -157,7 +157,7 @@ $ sudo update-alternatives --config java
 
 
 Test the tomcat installation by using the text based browser lynx.
-``
+```
 lynx tekvideo.tek.sdu.dk
 ```
 
