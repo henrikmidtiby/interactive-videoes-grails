@@ -936,3 +936,27 @@ and update the references to the ssl certificates in `/etc/nginx/sites-available
 
 
 
+### Setting up email notifications when there are packages to update on the server
+
+I have followed this guide for setting up cron-apt.
+[https://www.debuntu.org/how-to-email-notification-upon-available-package-updates-with-cron-apt/]
+
+Install crop-apt using apt-get.
+```
+apt-get install cron-apt
+```
+
+Modify the configuration file:
+```
+sudo vi /etc/cron-apt/config.
+```
+So it contains the following
+
+```
+MAILTO="hemi@mmmi.sdu.dk"
+MAILON="upgrade"
+```
+
+By default it now runs every night at 4.00.
+This is specified in the file `/etc/cron.d/cron-apt`.
+
