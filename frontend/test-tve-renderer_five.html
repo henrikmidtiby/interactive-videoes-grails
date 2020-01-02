@@ -10,6 +10,12 @@
 
 <tve-renderer id="renderer" content=""></tve-renderer>
 
+<p>The problem seems to be that the math rendering widget (mathquill) is not activated in 
+the matrix entry cells. Therefore an answer which is entered as "1/2", is forwarded as "1/2" and not as the fraction "\frac{1}{2}".</p>
+<p>A possible solution is to look at tve-matrix.js on line 61, where this.answer is compared to givenAnswer.</p>
+<p>A different issue I have observed, is the output from the exercise converter.<p>
+<p>A possible workaround, do not use the latex formatting for fractions in the matrix answer type.<p>
+
 <script type="module">
 var exercise = 
 {
@@ -27,8 +33,8 @@ var exercise =
       "type": "matrix",
       "properties": {
         "answer": [
-            ["1/2"],
-            ["1/3"]],
+            ["\\frac{1}{2}"],
+            ["\\frac{1}{3}"]],
         "height": 2,
         "width": 1
       },
