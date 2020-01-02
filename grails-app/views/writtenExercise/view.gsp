@@ -6,7 +6,8 @@
     <meta name="layout" content="main_fluid"/>
     <title>${exercise.name}</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.css" integrity="sha384-b/NoaeRXkMxyKcrDw2KtVtYKkVg3dA0rTRgLoV7W2df3MzeR1eHLTi+l4//4fMwk" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
     <sdu:appJavascriptModuleImport href="node_modules/katex/dist/katex.js" />
     <sdu:appJavascriptModuleImport href="components/tve-group-renderer.js" />
     <style>
